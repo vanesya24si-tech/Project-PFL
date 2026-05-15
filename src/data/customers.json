@@ -1,0 +1,7 @@
+[
+  { "id": 1, "name": "Budi Santoso", "status": "Loyal", "orders": 42, "lastOrder": "2 jam yang lalu", "avatar": "BS", "phone": "0812-3456-7890", "email": "budi.santoso@mail.com", "address": "Jl. Melati No. 12, Bandung", "memberSince": "Jan 2024", "favoriteService": "Cuci Komplit Regular" },
+  { "id": 2, "name": "Siti Aminah", "status": "Reguler", "orders": 8, "lastOrder": "1 hari yang lalu", "avatar": "SA", "phone": "0813-9876-5432", "email": "siti.aminah@mail.com", "address": "Jl. Kenanga No. 5, Surabaya", "memberSince": "Feb 2025", "favoriteService": "Setrika Saja" },
+  { "id": 3, "name": "Rian Hidayat", "status": "Baru", "orders": 1, "lastOrder": "Baru saja", "avatar": "RH", "phone": "0815-1234-5678", "email": "rian.hidayat@mail.com", "address": "Jl. Anggrek No. 21, Jakarta", "memberSince": "Mei 2026", "favoriteService": "Cuci Kering" },
+  { "id": 4, "name": "Dewi Lestari", "status": "Loyal", "orders": 35, "lastOrder": "3 hari yang lalu", "avatar": "DL", "phone": "0812-6767-6767", "email": "dewi.lestari@mail.com", "address": "Jl. Mawar No. 9, Semarang", "memberSince": "Okt 2024", "favoriteService": "Setrika Shirt" },
+  { "id": 5, "name": "Eko Prasetyo", "status": "Reguler", "orders": 6, "lastOrder": "5 jam yang lalu", "avatar": "EP", "phone": "0813-4444-5555", "email": "eko.prasetyo@mail.com", "address": "Jl. Akasia No. 7, Yogyakarta", "memberSince": "Nov 2025", "favoriteService": "Paket Cuci 5 Kg" }
+]
