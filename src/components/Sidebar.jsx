@@ -17,11 +17,14 @@ import {
 } from "react-icons/md";
 
 const T = {
-  primary: "#1ABC9C", // Tetap Hijau Netto
-  textMuted: "#808191",
-  textActive: "#11142D",
+  primary: "#0EA5E9", // Biru Aqua Laundry Premium
+  primaryDark: "#0369A1",
+  primaryMedium: "#0891B2",
+  textMuted: "#64748B",
+  textActive: "#1E293B",
   surface: "#FFFFFF",
-  border: "#E4E4E4"
+  border: "#B3E5FC",
+  bgLight: "#F0F9FF"
 };
 
 export default function Sidebar({ collapsed }) {

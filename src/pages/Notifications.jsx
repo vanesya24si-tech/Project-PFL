@@ -1,149 +1,107 @@
-import { useState } from "react";
-import { HiBell, HiClock, HiCheck, HiTrash, HiDotsVertical } from "react-icons/hi";
-import { MdOutlineShoppingBag, MdOutlineWarningAmber, MdOutlineAssignmentTurnedIn } from "react-icons/md";
+﻿import { HiPlus, HiArrowRight, HiMail, HiCheckCircle, HiDocumentReport, HiClock } from "react-icons/hi";
 
 export default function Notifications() {
-  const [filter, setFilter] = useState("Semua");
+  const stats = [
+    { label: "Template Aktif", value: 3, icon: <HiMail className="text-xl" />, color: "text-emerald-600 bg-emerald-50 border-emerald-100" },
+    { label: "Terkirim Hari Ini", value: 4, icon: <HiCheckCircle className="text-xl" />, color: "text-teal-600 bg-teal-50 border-teal-100" },
+    { label: "Gagal Terkirim", value: 1, icon: <HiDocumentReport className="text-xl" />, color: "text-rose-600 bg-rose-50 border-rose-100" },
+    { label: "Total Riwayat", value: 5, icon: <HiClock className="text-xl" />, color: "text-amber-600 bg-amber-50 border-amber-100" },
+  ];
 
-  const alerts = [
-    { 
-      id: 1,
-      title: "Pesanan Baru", 
-      desc: "Andi Saputra baru saja membuat order Cuci Komplit Express.", 
-      time: "2 Menit lalu", 
-      type: "order",
-      unread: true,
-      icon: <MdOutlineShoppingBag />,
-      color: "text-blue-600",
-      bg: "bg-blue-50"
+  const templates = [
+    {
+      title: "Cucian Selesai",
+      tag: "Otomatis",
+      description: "Dikirim otomatis saat status laundry berubah menjadi selesai.",
+      meta: "Status Selesai",
+      tagColor: "bg-emerald-50 text-emerald-700 border-emerald-200"
     },
-    { 
-      id: 2,
-      title: "Stok Menipis", 
-      desc: "Deterjen Cair Rose tinggal 1.5 Liter. Segera lakukan restok!", 
-      time: "1 Jam lalu", 
-      type: "warning",
-      unread: true,
-      icon: <MdOutlineWarningAmber />,
-      color: "text-amber-600",
-      bg: "bg-amber-50"
+    {
+      title: "Pengingat Pengambilan",
+      tag: "Manual",
+      description: "Kirim pengingat agar pelanggan segera mengambil cucian yang sudah selesai.",
+      meta: "Pengingat",
+      tagColor: "bg-amber-50 text-amber-700 border-amber-200"
     },
-    { 
-      id: 3,
-      title: "Order Selesai", 
-      desc: "Cucian ORD-092 (Siti Aisyah) siap diambil di rak.", 
-      time: "3 Jam lalu", 
-      type: "done",
-      unread: false,
-      icon: <MdOutlineAssignmentTurnedIn />,
-      color: "text-emerald-600",
-      bg: "bg-emerald-50"
+    {
+      title: "Promo Membership",
+      tag: "Otomatis",
+      description: "Notifikasi promo khusus member loyal dengan voucher diskon menarik.",
+      meta: "Promo Loyalitas",
+      tagColor: "bg-purple-50 text-purple-700 border-purple-200"
     },
   ];
 
-  const filteredAlerts = filter === "Semua" ? alerts : alerts.filter(a => a.type === filter.toLowerCase());
-
   return (
-    <div className="p-6 bg-[#F8FAFB] min-h-screen font-sans">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen bg-slate-50/50 p-4 sm:p-8 font-sans text-slate-800 antialiased">
+      <div className="max-w-6xl mx-auto space-y-6">
         
-        {/* Header & Actions */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        {/* Header Section */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-white p-6 sm:p-8 rounded-2xl border border-slate-100 shadow-sm">
           <div>
-            <h1 className="text-3xl font-black text-slate-800 flex items-center gap-3">
-              <span className="p-2 bg-[#1ABC9C] rounded-xl text-white shadow-lg shadow-[#1ABC9C]/20">
-                <HiBell />
-              </span>
-              Pusat Notifikasi
-            </h1>
-            <p className="text-slate-500 text-sm mt-1">Anda memiliki {alerts.filter(a => a.unread).length} pesan belum terbaca.</p>
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">Dashboard</span>
+            <h1 className="mt-1 text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Template Notifikasi</h1>
+            <p className="mt-1 text-sm text-slate-500">Kelola pesan otomatis dan pantau performa pengiriman ke pelanggan.</p>
           </div>
-          
-          <button className="flex items-center gap-2 text-sm font-bold text-[#1ABC9C] hover:bg-[#E8F8F5] px-4 py-2 rounded-xl transition-all">
-            <HiCheck className="text-lg" /> Tandai Semua Terbaca
+          <button className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700 active:scale-[0.98] transition-all">
+            <HiPlus className="text-lg" /> Buat Template Baru
           </button>
         </div>
 
-        {/* Tabs Filter */}
-        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
-          {["Semua", "Order", "Warning", "Done"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setFilter(tab)}
-              className={`px-6 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
-                filter === tab 
-                ? "bg-[#1A2E35] text-white shadow-md" 
-                : "bg-white text-slate-500 border border-slate-100 hover:border-[#1ABC9C]"
-              }`}
-            >
-              {tab}
-            </button>
+        {/* Stats Grid */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((item) => (
+            <div key={item.label} className="rounded-2xl bg-white p-6 border border-slate-100 shadow-sm flex items-center gap-4"> 
+              <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border ${item.color}`}>
+                {item.icon}
+              </div>
+              <div>
+                <p className="text-sm font-medium text-slate-500">{item.label}</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{item.value}</p>
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* Notification List */}
-        <div className="space-y-4">
-          {filteredAlerts.map((a) => (
-            <div 
-              key={a.id} 
-              className={`group relative bg-white p-5 rounded-[2rem] border transition-all hover:shadow-md flex gap-5 items-start ${
-                a.unread ? "border-[#1ABC9C]/30 shadow-sm" : "border-slate-100 opacity-80"
-              }`}
-            >
-              {/* Status Indicator */}
-              {a.unread && (
-                <div className="absolute top-6 right-6 w-2.5 h-2.5 bg-[#1ABC9C] rounded-full ring-4 ring-[#E8F8F5]" />
-              )}
+        {/* Templates List Section */}
+        <section className="rounded-2xl bg-white border border-slate-100 shadow-sm overflow-hidden">
+          <div className="border-b border-slate-100 p-6 bg-slate-50/50">
+            <h2 className="text-lg font-bold text-slate-900">Daftar Template Aktif</h2>
+            <p className="text-sm text-slate-500 mt-0.5">Pilih atau sesuaikan template di bawah ini untuk berinteraksi dengan pelanggan.</p>
+          </div>
 
-              {/* Icon Container */}
-              <div className={`p-4 rounded-2xl text-2xl shrink-0 ${a.bg} ${a.color}`}>
-                {a.icon}
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 pr-4">
-                <div className="flex justify-between items-start">
-                  <h4 className={`font-black text-lg ${a.unread ? "text-slate-800" : "text-slate-600"}`}>
-                    {a.title}
-                  </h4>
+          <div className="divide-y divide-slate-100">
+            {templates.map((template) => (
+              <div 
+                key={template.title} 
+                className="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50/50 transition-colors group cursor-pointer"
+              >
+                <div className="space-y-2">
+                  <div className="flex flex-wrap items-center gap-2.5">
+                    <h3 className="text-base font-semibold text-slate-900 group-hover:text-emerald-600 transition-colors">
+                      {template.title}
+                    </h3>
+                    <span className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${template.tagColor}`}>
+                      {template.tag}
+                    </span>
+                  </div>
+                  <p className="text-sm text-slate-600 max-w-2xl leading-relaxed">{template.description}</p>
+                  <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
+                    <span>Pemicu:</span>
+                    <span className="text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">{template.meta}</span>
+                  </div>
                 </div>
-                <p className="text-slate-500 text-sm leading-relaxed mt-1">
-                  {a.desc}
-                </p>
                 
-                <div className="flex items-center gap-4 mt-4">
-                  <span className="text-[10px] font-bold text-slate-400 flex items-center gap-1 uppercase tracking-wider">
-                    <HiClock className="text-sm" /> {a.time}
-                  </span>
-                  <div className="h-1 w-1 bg-slate-300 rounded-full" />
-                  <button className="text-[10px] font-bold text-[#1ABC9C] uppercase tracking-wider hover:underline">
-                    Detail Pesanan
+                <div className="flex justify-end sm:block">
+                  <button className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-400 shadow-sm group-hover:border-emerald-200 group-hover:bg-emerald-50 group-hover:text-emerald-600 transition-all">
+                    <HiArrowRight className="text-lg group-hover:translate-x-0.5 transition-transform" />
                   </button>
                 </div>
               </div>
+            ))}
+          </div>
+        </section>
 
-              {/* Hover Actions */}
-              <div className="flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                <button className="p-2 hover:bg-slate-50 rounded-lg text-slate-400 hover:text-red-500">
-                  <HiTrash size={18} />
-                </button>
-                <button className="p-2 hover:bg-slate-50 rounded-lg text-slate-400">
-                  <HiDotsVertical size={18} />
-                </button>
-              </div>
-            </div>
-          ))}
-
-          {filteredAlerts.length === 0 && (
-            <div className="text-center py-20 bg-white rounded-[3rem] border border-dashed border-slate-200">
-              <div className="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <HiBell className="text-4xl text-slate-200" />
-              </div>
-              <h3 className="text-slate-800 font-bold">Tidak ada notifikasi</h3>
-              <p className="text-slate-500 text-sm">Semua pemberitahuan di kategori ini sudah dibaca.</p>
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ export default function MainLayout() {
     <div style={{ 
       display: "flex", 
       height: "100vh", 
-      background: "#F4F7FE", // Warna abu-biru muda khas desain
+      background: "linear-gradient(135deg, #F8FCFE 0%, #F0F9FF 100%)", // Gradien biru laundry fresh
       fontFamily: "'Inter', sans-serif", 
       overflow: "hidden" 
     }}>
@@ -34,7 +34,8 @@ export default function MainLayout() {
           flex: 1, 
           overflowY: "auto", 
           padding: "20px 40px",
-          scrollBehavior: "smooth" 
+          scrollBehavior: "smooth",
+          background: "linear-gradient(135deg, #F8FCFE 0%, #F0F9FF 100%)"
         }}>
           <Outlet />
         </main>

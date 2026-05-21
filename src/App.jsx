@@ -60,6 +60,7 @@ function App() {
           {/* MEMBERS */}
           <Route path="/members" element={<Member />} />
           <Route path="/members/add" element={<AddMember />} />
+          <Route path="/members/:id/edit" element={<AddMember />} />
           <Route path="/members/:id" element={<MemberDetail />} />
 
           {/* PRODUCTS */}
