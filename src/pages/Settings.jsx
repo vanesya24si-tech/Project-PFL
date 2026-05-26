@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { 
-  HiOutlineStoreFront, 
+  HiOutlineBuildingStorefront, 
   HiOutlineBell, 
   HiOutlineShieldCheck, 
   HiOutlineCurrencyDollar,
-  HiOutlineDeviceMobile,
+  HiDevicePhoneMobile,
   HiOutlineQuestionMarkCircle,
   HiChevronRight,
   HiCheck
@@ -20,11 +20,11 @@ export default function Settings() {
   };
 
   const menuItems = [
-    { id: "toko", label: "Profil Toko", icon: <HiOutlineStoreFront size={20} /> },
+    { id: "toko", label: "Profil Toko", icon: <HiOutlineBuildingStorefront size={20} /> },
     { id: "tarif", label: "Tarif & Layanan", icon: <HiOutlineCurrencyDollar size={20} /> },
     { id: "notif", label: "Notifikasi WA", icon: <HiOutlineBell size={20} /> },
     { id: "keamanan", label: "Keamanan", icon: <HiOutlineShieldCheck size={20} /> },
-    { id: "perangkat", label: "Perangkat", icon: <HiOutlineDeviceMobile size={20} /> },
+    { id: "perangkat", label: "Perangkat", icon: <HiDevicePhoneMobile size={20} /> },
   ];
 
   return (
