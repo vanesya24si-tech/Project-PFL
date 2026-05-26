@@ -7,9 +7,16 @@ import {
   HiArrowLeft,
   HiExclamationCircle,
   HiIdentification,
-  HiClipboardCheck
+  HiClipboardCheck,
+  HiMail,
+  HiUserGroup
 } from "react-icons/hi";
-import { loadCustomers, saveCustomers, buildCustomerData, getCustomerById } from "../utils/customerStorage";
+import { 
+  loadCustomers, 
+  saveCustomers, 
+  buildCustomerData, 
+  getCustomerById 
+} from "../utils/customerStorage";
 
 export default function AddMember() {
   const navigate = useNavigate();
@@ -19,6 +26,7 @@ export default function AddMember() {
   const [form, setForm] = useState({
     name: "",
     type: "Regular",
+    customerType: "Pekerja",
     phone: "",
     email: "",
     address: "",
@@ -35,9 +43,10 @@ export default function AddMember() {
       return;
     }
     setForm({
-      name: existing.name,
-      type: existing.favoriteService?.includes("Premium") ? "Premium" : existing.favoriteService?.includes("Korporat") ? "Corporate" : "Regular",
-      phone: existing.phone,
+      name: existing.name || "",
+      type: existing.segment || "Regular",
+      customerType: existing.customerType || "Pekerja",
+      phone: existing.phone || "",
       email: existing.email || "",
       address: existing.address || "",
       notes: existing.notes || "",
@@ -45,18 +54,17 @@ export default function AddMember() {
   }, [id, isEdit, navigate]);
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
     if (error) setError("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Validasi Sederhana
     if (!form.name || !form.phone || !form.email) {
-      setError("Nama pelanggan, nomor HP, dan email wajib diisi!");
+      setError("Nama, Nomor HP, dan Email wajib diisi!");
       return;
     }
 
@@ -64,43 +72,46 @@ export default function AddMember() {
     const existingCustomer = isEdit ? getCustomerById(id) : null;
     const customerData = buildCustomerData(form, existingCustomer);
 
-    if (isEdit) {
-      saveCustomers(customers.map((item) => (item.id === existingCustomer.id ? customerData : item)));
-      alert("Data pelanggan berhasil diperbarui!");
-    } else {
-      saveCustomers([...customers, customerData]);
-      alert("Pelanggan berhasil didaftarkan ke sistem Netto Laundry!");
+    try {
+      if (isEdit) {
+        saveCustomers(customers.map(item => item.id === id ? customerData : item));
+      } else {
+        saveCustomers([...customers, customerData]);
+      }
+      navigate("/members");
+    } catch (err) {
+      setError("Gagal menyimpan data. Silakan coba lagi.");
     }
-
-    navigate("/members");
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 md:p-10 font-sans">
+    <div className="min-h-screen bg-[#FDFDFD] p-6 md:p-10 font-sans text-slate-700">
       <div className="max-w-3xl mx-auto space-y-6">
         
         {/* BACK BUTTON */}
         <button 
           onClick={() => navigate("/members")}
-          className="group flex items-center gap-2 text-slate-500 hover:text-emerald-600 font-bold text-sm transition-all w-fit"
+          className="group flex items-center gap-2 text-slate-400 hover:text-sky-600 font-semibold text-sm transition-all"
         >
           <HiArrowLeft className="text-lg group-hover:-translate-x-1 transition-transform" />
           Kembali ke Database
         </button>
 
         {/* MAIN CARD */}
-        <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
+        <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
           
-          {/* HEADER */}
-          <div className="px-8 md:px-12 pt-10 pb-8 bg-gradient-to-r from-slate-900 to-slate-800">
-            <div className="flex items-center gap-4 mb-2">
-               <div className="p-3 bg-emerald-600 rounded-2xl shadow-lg shadow-emerald-900/20">
-                  <HiUser className="text-white text-2xl" />
+          {/* HEADER SECTION */}
+          <div className="px-8 md:px-12 py-10 bg-[#F8FBFF] border-b border-slate-100">
+            <div className="flex items-center gap-5">
+               <div className="p-4 bg-sky-100 rounded-3xl text-sky-600 shadow-sm">
+                  <HiUser className="text-3xl" />
                </div>
                <div>
-                  <h1 className="text-2xl font-black text-white tracking-tight">{isEdit ? "Edit Pelanggan" : "Registrasi Pelanggan"}</h1>
-                  <p className="text-slate-400 text-sm font-medium">
-                    {isEdit ? "Perbarui detail pelanggan dan simpan perubahan." : "Tambahkan profil pelanggan baru untuk mulai mencatat pesanan."}
+                  <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+                    {isEdit ? "Perbarui Data Pelanggan" : "Tambah Pelanggan Baru"}
+                  </h1>
+                  <p className="text-slate-500 text-sm mt-1">
+                    Kelola profil pelanggan untuk mempermudah strategi CRM & Notifikasi.
                   </p>
                </div>
             </div>
@@ -109,132 +120,161 @@ export default function AddMember() {
           <div className="p-8 md:p-12">
             {/* ERROR BANNER */}
             {error && (
-              <div className="mb-8 flex items-center gap-3 bg-emerald-50 text-emerald-600 px-5 py-4 rounded-2xl border border-emerald-100 text-sm font-bold animate-shake">
+              <div className="mb-8 flex items-center gap-3 bg-red-50 text-red-600 px-5 py-4 rounded-2xl border border-red-100 text-sm font-semibold animate-pulse">
                 <HiExclamationCircle className="text-xl shrink-0" />
                 {error}
               </div>
             )}
 
-            {/* FORM */}
-            <form onSubmit={handleSubmit} className="space-y-7">
+            <form onSubmit={handleSubmit} className="space-y-8">
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 
                 {/* Nama Lengkap */}
                 <div className="md:col-span-2 space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
-                    Nama Pelanggan <span className="text-emerald-500">*</span>
+                  <label className="text-[11px] font-bold uppercase tracking-widest text-slate-400 ml-1">
+                    Nama Lengkap <span className="text-red-400">*</span>
                   </label>
                   <div className="relative group">
-                    <HiIdentification className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-emerald-500 transition-colors" />
+                    <HiIdentification className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 text-xl group-focus-within:text-sky-500 transition-colors" />
                     <input
                       type="text"
                       name="name"
-                      placeholder="Contoh: Budi Santoso"
+                      autoFocus
+                      placeholder="Masukkan nama lengkap..."
                       value={form.name}
                       onChange={handleChange}
-                      className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500 transition-all text-sm font-bold text-slate-700"
+                      className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-sky-500/5 focus:border-sky-500 transition-all text-sm font-semibold text-slate-700"
                     />
                   </div>
                 </div>
 
                 {/* Nomor HP */}
                 <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
-                    WhatsApp / No. HP <span className="text-emerald-500">*</span>
+                  <label className="text-[11px] font-bold uppercase tracking-widest text-slate-400 ml-1">
+                    WhatsApp / HP <span className="text-red-400">*</span>
                   </label>
                   <div className="relative group">
-                    <HiPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-emerald-500 transition-colors" />
+                    <HiPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 text-xl group-focus-within:text-sky-500 transition-colors" />
                     <input
-                      type="text"
+                      type="tel"
                       name="phone"
-                      placeholder="0812xxxx"
+                      placeholder="08xx xxxx xxxx"
                       value={form.phone}
                       onChange={handleChange}
-                      className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500 transition-all text-sm font-bold text-slate-700"
+                      className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-sky-500/5 focus:border-sky-500 transition-all text-sm font-semibold text-slate-700"
                     />
                   </div>
                 </div>
 
                 {/* Email */}
                 <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
-                    Email Pelanggan <span className="text-emerald-500">*</span>
+                  <label className="text-[11px] font-bold uppercase tracking-widest text-slate-400 ml-1">
+                    Email Aktif <span className="text-red-400">*</span>
                   </label>
                   <div className="relative group">
-                    <HiIdentification className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl group-focus-within:text-emerald-500 transition-colors" />
+                    <HiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 text-xl group-focus-within:text-sky-500 transition-colors" />
                     <input
                       type="email"
                       name="email"
-                      placeholder="email@pelanggan.com"
+                      placeholder="contoh@mail.com"
                       value={form.email}
                       onChange={handleChange}
-                      className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500 transition-all text-sm font-bold text-slate-700"
+                      className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-sky-500/5 focus:border-sky-500 transition-all text-sm font-semibold text-slate-700"
                     />
                   </div>
                 </div>
 
-                {/* Tipe Pelanggan */}
+                {/* Jenis Pelanggan (CRM) */}
                 <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
-                    Tipe Membership
+                  <label className="text-[11px] font-bold uppercase tracking-widest text-slate-400 ml-1">
+                    Kategori (CRM Attribute)
                   </label>
                   <div className="relative">
+                    <HiUserGroup className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 text-xl z-10" />
+                    <select
+                      name="customerType"
+                      value={form.customerType}
+                      onChange={handleChange}
+                      className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-sky-500/5 focus:border-sky-500 transition-all text-sm font-semibold text-slate-700 appearance-none cursor-pointer"
+                    >
+                      <option value="Pekerja">Pekerja / Karyawan</option>
+                      <option value="Pelajar">Pelajar / Mahasiswa</option>
+                      <option value="Ibu Rumah Tangga">Ibu Rumah Tangga</option>
+                      <option value="Bisnis">Bisnis / Instansi</option>
+                    </select>
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                       <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Segmen Membership */}
+                <div className="space-y-2">
+                  <label className="text-[11px] font-bold uppercase tracking-widest text-slate-400 ml-1">
+                    Loyalty Segment
+                  </label>
+                  <div className="relative">
+                    <HiClipboardCheck className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 text-xl z-10" />
                     <select
                       name="type"
                       value={form.type}
                       onChange={handleChange}
-                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500 transition-all text-sm font-bold text-slate-700 appearance-none cursor-pointer"
+                      className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-sky-500/5 focus:border-sky-500 transition-all text-sm font-semibold text-slate-700 appearance-none cursor-pointer"
                     >
-                      <option value="Regular">Regular</option>
-                      <option value="Premium">Premium (Diskon 10%)</option>
-                      <option value="Corporate">Corporate / Hotel</option>
+                      <option value="Regular">Regular Member</option>
+                      <option value="Premium">Premium Member (Gold)</option>
+                      <option value="VIP">VIP / Corporate</option>
                     </select>
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                      <HiClipboardCheck className="text-xl" />
+                       <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
                     </div>
                   </div>
                 </div>
 
                 {/* Alamat */}
                 <div className="md:col-span-2 space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">
-                    Alamat Lengkap
+                  <label className="text-[11px] font-bold uppercase tracking-widest text-slate-400 ml-1">
+                    Alamat Lengkap Penjemputan
                   </label>
                   <div className="relative group">
-                    <HiLocationMarker className="absolute left-4 top-5 text-slate-400 text-xl group-focus-within:text-emerald-500 transition-colors" />
+                    <HiLocationMarker className="absolute left-4 top-5 text-slate-300 text-xl group-focus-within:text-sky-500 transition-colors" />
                     <textarea
                       name="address"
                       rows="3"
-                      placeholder="Masukkan alamat domisili untuk layanan antar-jemput..."
+                      placeholder="Nama jalan, blok, nomor rumah, atau detail patokan lokasi..."
                       value={form.address}
                       onChange={handleChange}
-                      className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500 transition-all text-sm font-bold text-slate-700 resize-none"
+                      className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-sky-500/5 focus:border-sky-500 transition-all text-sm font-semibold text-slate-700 resize-none"
                     />
                   </div>
                 </div>
               </div>
 
               {/* ACTION BUTTONS */}
-              <div className="flex flex-col-reverse sm:flex-row gap-4 pt-8 border-t border-slate-100 mt-4">
+              <div className="flex flex-col-reverse sm:flex-row gap-4 pt-10 border-t border-slate-100 mt-4">
                 <button
                   type="button"
                   onClick={() => navigate("/members")}
-                  className="flex-1 px-6 py-4 rounded-2xl font-black text-slate-500 bg-slate-100 hover:bg-slate-200 transition-all uppercase tracking-widest text-xs"
+                  className="flex-1 px-8 py-4 rounded-2xl font-bold text-slate-400 bg-transparent hover:bg-slate-50 hover:text-slate-600 transition-all text-sm"
                 >
-                  Batalkan
+                  Batal
                 </button>
                 <button
                   type="submit"
-                  className="flex-[2] px-8 py-4 rounded-2xl font-black text-white bg-emerald-600 hover:bg-emerald-700 shadow-xl shadow-emerald-200 transition-all active:scale-95 uppercase tracking-widest text-xs"
+                  className="flex-[2] px-8 py-4 rounded-2xl font-bold text-white bg-sky-600 hover:bg-sky-700 shadow-xl shadow-sky-100 transition-all active:scale-[0.98] text-sm"
                 >
-                  {isEdit ? "Perbarui Pelanggan" : "Simpan Pelanggan Baru"}
+                  {isEdit ? "Konfirmasi Perubahan" : "Daftarkan Sekarang"}
                 </button>
               </div>
 
             </form>
           </div>
         </div>
+
+        <p className="text-center text-xs text-slate-400 font-medium pb-10">
+           Data dilindungi secara lokal melalui sistem enkripsi database browser.
+        </p>
       </div>
     </div>
   );

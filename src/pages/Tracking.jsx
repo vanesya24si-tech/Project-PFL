@@ -1,180 +1,279 @@
 import React, { useState, useMemo } from "react";
-import { HiLocationMarker, HiClock, HiCheckCircle, HiChevronRight, HiSearch } from "react-icons/hi";
-import { MdLocalLaundryService, MdIron, MdLayers } from "react-icons/md";
+import { HiClock, HiCheckCircle, HiSearch, HiPrinter } from "react-icons/hi";
+import { MdLocalLaundryService, MdIron, MdLayers, MdArrowForward } from "react-icons/md";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function Tracking() {
   const [searchQuery, setSearchQuery] = useState("");
-
-  const tracks = [
+  
+  // State dengan data yang jauh lebih banyak dan variatif
+  const [tracks, setTracks] = useState([
     { 
       id: "ORD-001", 
       user: "Andi Saputra", 
-      status: "Pencucian", 
-      detail: "Baju sedang diproses di dalam mesin cuci nomor 04",
-      currentStep: 1, // 0: Antre, 1: Cuci, 2: Setrika, 3: Ready
+      status: "Lagi Dicuci", 
+      detail: "Masuk mesin cuci nomor 04, pakai deterjen khusus warna.",
+      currentStep: 1, 
       eta: "14:30",
-      icon: <MdLocalLaundryService />
+      weight: "5 Kg",
+      service: "Express Kiloan",
+      isPaid: true
+    },
+    { 
+      id: "ORD-002", 
+      user: "Siti Rahmawati", 
+      status: "Antre di Rak", 
+      detail: "Menunggu giliran mesin cuci kosong. Pisahkan baju luntur.",
+      currentStep: 0, 
+      eta: "18:00",
+      weight: "4.5 Kg",
+      service: "Reguler Cuci Setrika",
+      isPaid: true
     },
     { 
       id: "ORD-003", 
       user: "Budi Santoso", 
-      status: "Finishing", 
-      detail: "Proses setrika uap bertekanan tinggi dan pelipatan",
+      status: "Tahap Setrika", 
+      detail: "Lagi disetrika uap biar licin dan rapi.",
       currentStep: 2,
       eta: "17:00",
-      icon: <MdIron />
+      weight: "3 Kg",
+      service: "Reguler Setrika Saja",
+      isPaid: false
+    },
+    { 
+      id: "ORD-004", 
+      user: "Dewi Lestari", 
+      status: "Tahap Setrika", 
+      detail: "Proses setrika uap + pemberian parfum variant Sakura.",
+      currentStep: 2,
+      eta: "15:15",
+      weight: "6.2 Kg",
+      service: "Express Kiloan",
+      isPaid: true
     },
     { 
       id: "ORD-005", 
       user: "Rina Maria", 
-      status: "Siap Diambil", 
-      detail: "Cucian sudah dikemas rapi di loker penyimpanan A-12",
+      status: "Bisa Diambil", 
+      detail: "Sudah masuk loker A-12. Jangan lupa bawa nota ya!",
       currentStep: 3,
       eta: "Selesai",
-      icon: <HiCheckCircle />
+      weight: "1 Pcs",
+      service: "Bedcover Jumbo",
+      isPaid: true
     },
+    { 
+      id: "ORD-006", 
+      user: "Ahmad Fauzi", 
+      status: "Antre di Rak", 
+      detail: "Nunggu antrean cuci. Customer minta pewangi ekstra Lily.",
+      currentStep: 0, 
+      eta: "Besok 10:00",
+      weight: "8 Kg",
+      service: "Reguler Cuci Setrika",
+      isPaid: false
+    },
+    { 
+      id: "ORD-007", 
+      user: "Hendra Wijaya", 
+      status: "Lagi Dicuci", 
+      detail: "Masuk mesin pengering drum nomor 02.",
+      currentStep: 1, 
+      eta: "16:45",
+      weight: "2 Pcs",
+      service: "Jas & Celana Formal",
+      isPaid: true
+    },
+    { 
+      id: "ORD-008", 
+      user: "Mega Utami", 
+      status: "Bisa Diambil", 
+      detail: "Sudah di-packing plastik gantung, siap dijemput di kasir.",
+      currentStep: 3, 
+      eta: "Selesai",
+      weight: "4 Kg",
+      service: "Cuci Lipat Fast",
+      isPaid: false
+    }
+  ]);
+
+  const steps = [
+    { label: "Antre", color: "bg-slate-500", text: "text-slate-600" },
+    { label: "Cuci", color: "bg-blue-500", text: "text-blue-600" },
+    { label: "Setrika", color: "bg-amber-500", text: "text-amber-600" },
+    { label: "Ready", color: "bg-green-600", text: "text-green-600" }
   ];
 
-  const steps = ["Antre", "Cuci", "Setrika", "Ready"];
+  // Fungsi interaktif Admin untuk menaikkan step status laundry
+  const handleNextStep = (id) => {
+    setTracks(prevTracks => prevTracks.map(track => {
+      if (track.id === id && track.currentStep < 3) {
+        const nextStep = track.currentStep + 1;
+        const statusLabels = ["Antre di Rak", "Lagi Dicuci", "Tahap Setrika", "Bisa Diambil"];
+        return {
+          ...track,
+          currentStep: nextStep,
+          status: statusLabels[nextStep],
+          eta: nextStep === 3 ? "Selesai" : track.eta
+        };
+      }
+      return track;
+    }));
+  };
 
   const filteredTracks = useMemo(() => {
     return tracks.filter(t => 
       t.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       t.user.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  }, [searchQuery]);
+  }, [searchQuery, tracks]);
+
+  const getTheme = (step) => {
+    switch(step) {
+      case 1: return { bg: "bg-blue-50/60", border: "border-blue-200", accent: "bg-blue-600", icon: "text-blue-600" };
+      case 2: return { bg: "bg-amber-50/60", border: "border-amber-200", accent: "bg-amber-600", icon: "text-amber-600" };
+      case 3: return { bg: "bg-green-50/60", border: "border-green-200", accent: "bg-green-600", icon: "text-green-600" };
+      default: return { bg: "bg-slate-50/60", border: "border-slate-200", accent: "bg-slate-600", icon: "text-slate-600" };
+    }
+  };
 
   return (
-    <div className="p-6 md:p-8 bg-slate-50 min-h-screen font-sans text-slate-900 antialiased">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <div className="p-6 md:p-8 bg-[#F8FAFC] min-h-screen text-slate-900 font-sans">
+      <div className="max-w-5xl mx-auto space-y-6">
         
-        {/* Header Section */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
+        {/* HEADER */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2.5">
-              <HiLocationMarker className="text-emerald-600" size={26} /> Alur Kerja & Live Tracking
-            </h1>
-            <p className="text-sm text-slate-500 mt-1">Pantau posisi pengerjaan pakaian pelanggan di area workshop secara real-time.</p>
+            <h1 className="text-3xl font-black tracking-tighter italic text-slate-800">LIVE TRACKING</h1>
+            <p className="text-slate-500 font-medium text-sm">
+              Memantau <span className="font-bold text-blue-600">{tracks.length} Pesanan Aktif</span> di workshop laundry.
+            </p>
           </div>
-          
-          {/* Search Input Bar */}
-          <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 w-full sm:w-64 shadow-sm">
-            <HiSearch size={18} className="text-slate-400" />
+          <div className="relative">
+            <HiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg" />
             <input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Cari ID Nota / Nama..."
-              className="w-full bg-transparent text-xs text-slate-800 outline-none placeholder:text-slate-400"
+              placeholder="Cari nama atau nomor nota..."
+              className="pl-11 pr-4 py-3 rounded-2xl border border-slate-200 focus:ring-4 focus:ring-blue-100 shadow-sm outline-none w-full md:w-80 transition-all bg-white text-sm"
             />
           </div>
         </div>
 
-        {/* Stats Grid Overview */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { label: "Dalam Antrean", val: 5, color: "bg-slate-400" },
-            { label: "Sedang Dicuci", val: 3, color: "bg-blue-500" },
-            { label: "Tahap Finishing", val: 4, color: "bg-amber-500" },
-            { label: "Siap Diambil", val: 12, color: "bg-emerald-500" },
-          ].map((item, idx) => (
-            <div key={idx} className="bg-white p-4 rounded-xl border border-slate-200/60 shadow-sm">
-              <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">{item.label}</p>
-              <div className="flex items-center gap-2 mt-1.5">
-                <div className={`w-2 h-2 rounded-full ${item.color}`} />
-                <span className="text-xl font-bold text-slate-900 tracking-tight">{item.val} Order</span>
-              </div>
+        {/* LIST TRACKING */}
+        <div className="space-y-6">
+          {filteredTracks.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-3xl border border-dashed border-slate-300">
+              <p className="text-slate-400 font-medium">Nota atau nama pelanggan tidak ditemukan.</p>
             </div>
-          ))}
-        </div>
-
-        {/* Tracking Workspace Cards */}
-        <div className="space-y-4">
-          {filteredTracks.map((t) => (
-            <div key={t.id} className="group bg-white rounded-xl border border-slate-200/60 shadow-sm hover:border-slate-300 hover:shadow-md transition-all p-5 md:p-6 relative">
-              
-              {/* Card Meta Top Layout */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-5">
-                <div className="flex items-center gap-3.5">
-                  <div className={`w-11 h-11 rounded-lg flex items-center justify-center text-xl shrink-0 ${
-                    t.currentStep === 3 ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-600"
-                  }`}>
-                    {t.currentStep === 1 && <MdLocalLaundryService />}
-                    {t.currentStep === 2 && <MdIron />}
-                    {t.currentStep === 3 && <HiCheckCircle />}
-                    {t.currentStep === 0 && <MdLayers />}
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/50 px-2 py-0.5 rounded tracking-wide">
-                        {t.id}
-                      </span>
-                      <span className="text-slate-400 text-xs flex items-center gap-1 font-medium">
-                        <HiClock size={14} /> Est. Selesai: {t.eta}
-                      </span>
-                    </div>
-                    <h3 className="text-sm font-bold text-slate-900 mt-1">{t.user}</h3>
-                  </div>
-                </div>
-
-                <div>
-                  <span className={`inline-flex text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg border ${
-                    t.currentStep === 3 ? "bg-emerald-50 text-emerald-700 border-emerald-200/40" : "bg-slate-50 text-slate-600 border-slate-200/60"
-                  }`}>
-                    {t.status}
-                  </span>
-                </div>
-              </div>
-
-              {/* Status Stepper Progression */}
-              <div className="space-y-4">
-                <p className="text-xs text-slate-500 italic bg-slate-50 border border-slate-100 px-3 py-2 rounded-lg">
-                  Keterangan: {t.detail}
-                </p>
-                
-                {/* Visual Segmented Stepper */}
-                <div className="grid grid-cols-4 gap-2 relative pt-2">
-                  {steps.map((step, idx) => {
-                    const isCompleted = t.currentStep >= idx;
-                    const isCurrent = t.currentStep === idx;
-                    
-                    return (
-                      <div key={step} className="space-y-2">
-                        {/* Segment Line Bar */}
-                        <div className={`h-1.5 rounded-full transition-colors duration-500 ${
-                          isCurrent ? "bg-amber-500" : isCompleted ? "bg-emerald-600" : "bg-slate-100"
-                        }`} />
-                        
-                        {/* Text Label */}
-                        <div className="flex items-center justify-between px-0.5">
-                          <span className={`text-[10px] font-bold uppercase tracking-wide ${
-                            isCurrent ? "text-amber-600" : isCompleted ? "text-slate-800" : "text-slate-400"
-                          }`}>
-                            {step}
+          ) : (
+            filteredTracks.map((t) => {
+              const theme = getTheme(t.currentStep);
+              return (
+                <div key={t.id} className={`rounded-3xl border-2 ${theme.border} ${theme.bg} p-6 md:p-8 shadow-sm transition-all hover:shadow-md`}>
+                  
+                  {/* TOP SECTION: INFO UTAMA */}
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+                    <div className="flex items-center gap-5">
+                      <div className={`w-14 h-14 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-center justify-center text-2xl ${theme.icon}`}>
+                        {t.currentStep === 0 && <MdLayers />}
+                        {t.currentStep === 1 && <MdLocalLaundryService className="animate-spin-[spin_4s_linear_infinite]" />}
+                        {t.currentStep === 2 && <MdIron />}
+                        {t.currentStep === 3 && <HiCheckCircle />}
+                      </div>
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-[11px] font-black uppercase px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-700 shadow-2xs">
+                            {t.id}
+                          </span>
+                          <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-200/80 text-slate-700">
+                            {t.weight} • {t.service}
+                          </span>
+                          <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded-md ${t.isPaid ? 'bg-green-100 text-green-700' : 'bg-rose-100 text-rose-700'}`}>
+                            {t.isPaid ? 'Lunas' : 'Belum Bayar'}
                           </span>
                         </div>
+                        <h3 className="text-xl font-black mt-1.5 text-slate-800 uppercase tracking-tight">{t.user}</h3>
                       </div>
-                    );
-                  })}
+                    </div>
+                    
+                    <div className="md:text-right bg-white/80 md:bg-transparent p-3 md:p-0 rounded-xl w-full md:w-auto border md:border-none border-slate-200/60">
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Update Terakhir</p>
+                      <p className={`text-lg font-black ${theme.icon}`}>{t.status}</p>
+                    </div>
+                  </div>
+
+                  {/* MIDDLE SECTION: PROGRESS STEPPER */}
+                  <div className="grid grid-cols-4 gap-3 relative mb-8">
+                    {steps.map((step, idx) => {
+                      const isDone = t.currentStep >= idx;
+                      const isCurrent = t.currentStep === idx;
+                      return (
+                        <div key={idx} className="space-y-3">
+                          <div className={`h-3 rounded-full transition-all duration-500 ${
+                            isDone ? steps[idx].color : "bg-white border border-slate-200"
+                          } ${isCurrent ? "ring-4 ring-white shadow-sm animate-pulse" : ""}`} />
+                          
+                          <p className={`text-[11px] font-black uppercase text-center ${
+                            isDone ? steps[idx].text : "text-slate-300"
+                          }`}>
+                            {step.label}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* BOTTOM SECTION: CATATAN & ACTIONS */}
+                  <div className="flex flex-col lg:flex-row gap-4 items-stretch lg:items-center justify-between border-t border-slate-200/60 pt-5 mt-4">
+                    
+                    {/* Catatan Khusus */}
+                    <div className="bg-white/90 p-3 px-4 rounded-xl border border-slate-200/80 flex justify-between items-center flex-1 max-w-2xl">
+                      <p className="text-xs font-semibold italic text-slate-600">"{t.detail}"</p>
+                      <div className="flex items-center gap-1.5 text-slate-400 ml-4 shrink-0">
+                        <HiClock className="text-sm" />
+                        <span className="text-[10px] font-bold uppercase tracking-tight bg-slate-100 px-1.5 py-0.5 rounded text-slate-600">
+                          {t.eta === "Selesai" ? "Siap" : `Est. ${t.eta}`}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Tombol Aksi Cepat Admin */}
+                    <div className="flex items-center gap-2 shrink-0 justify-end">
+                      <button 
+                        onClick={() => alert(`Mencetak struk/tag untuk ${t.id}`)}
+                        title="Cetak Nota"
+                        className="p-2.5 rounded-xl border border-slate-300 bg-white text-slate-600 hover:bg-slate-50 active:scale-95 transition-all text-sm"
+                      >
+                        <HiPrinter size={18} />
+                      </button>
+                      <button 
+                        onClick={() => window.open(`https://wa.me/?text=Halo%20${t.user},%20laundry%20kamu%20dengan%20nomor%20nota%20${t.id}%20saat%20ini%20berada%20di%20status:%20*${t.status}*.`)}
+                        className="flex items-center gap-1.5 p-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs active:scale-95 transition-all"
+                      >
+                        <FaWhatsapp size={16} />
+                        <span className="hidden sm:inline">Hubungi</span>
+                      </button>
+                      
+                      {t.currentStep < 3 && (
+                        <button 
+                          onClick={() => handleNextStep(t.id)}
+                          className={`flex items-center gap-1.5 p-2.5 px-4 rounded-xl ${theme.accent} hover:opacity-90 text-white font-black text-xs active:scale-95 transition-all shadow-xs`}
+                        >
+                          <span>Lanjut Tahap</span>
+                          <MdArrowForward size={14} />
+                        </button>
+                      )}
+                    </div>
+
+                  </div>
+
                 </div>
-              </div>
-
-              {/* Action Button Trigger */}
-              <div className="mt-5 pt-3 border-t border-slate-100 flex justify-end">
-                <button className="inline-flex items-center gap-1 text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors">
-                  Detail Ringkasan Order <HiChevronRight size={16} />
-                </button>
-              </div>
-
-            </div>
-          ))}
-
-          {filteredTracks.length === 0 && (
-            <div className="p-8 text-center bg-white border border-dashed border-slate-200 rounded-xl">
-              <p className="text-xs text-slate-400 font-medium">Tidak ada antrean pengerjaan aktif yang cocok dengan kriteria pencarian.</p>
-            </div>
+              );
+            })
           )}
         </div>
-
       </div>
     </div>
   );

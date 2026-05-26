@@ -1,8 +1,17 @@
-import { HiChatAlt, HiStar, HiThumbUp, HiThumbDown, HiOutlineBadgeCheck } from "react-icons/hi";
+import { useState } from "react";
+import { 
+  HiChatAlt, 
+  HiStar, 
+  HiThumbUp, 
+  HiThumbDown, 
+  HiOutlineBadgeCheck, 
+  HiLightningBolt, 
+  HiReply 
+} from "react-icons/hi";
 import { MdOutlineRateReview } from "react-icons/md";
 
 export default function Feedback() {
-  const reviews = [
+  const [reviews] = useState([
     { 
       user: "Dewi Lestari", 
       rate: 5, 
@@ -27,95 +36,99 @@ export default function Feedback() {
       tag: "Puas",
       avatar: "SA"
     },
-  ];
+  ]);
 
   return (
-    <div className="p-6 md:p-8 bg-slate-50 min-h-screen font-sans text-slate-900 antialiased">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <div className="min-h-screen bg-[#F0F7FF] p-6 md:p-12 flex items-center justify-center font-sans antialiased text-[#0F172A]">
+      <div className="bg-white rounded-[3rem] border border-blue-50 shadow-2xl shadow-blue-900/5 p-8 md:p-12 max-w-4xl w-full space-y-8 relative overflow-hidden">
         
-        {/* Header & Stats Summary Layout */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
-          <div>
-            <h1 className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2.5">
-              <div className="p-2 bg-emerald-600 rounded-xl text-white shadow-sm">
-                <HiChatAlt size={20} />
-              </div>
-              Feedback & Review Pelanggan
+        {/* DECORATIVE ELEMENT */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-[5rem] -mr-8 -mt-8 z-0 opacity-50" />
+
+        {/* TOP BAR / NAVIGATION */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-50 pb-8 relative z-10">
+          <div className="space-y-1">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full text-[10px] font-black uppercase tracking-widest text-blue-600">
+              <HiLightningBolt /> Kepuasan Pengguna
+            </div>
+            <h1 className="text-3xl font-black tracking-tight text-slate-900 leading-tight">
+              Feedback <span className="text-blue-600">& Review</span>
             </h1>
-            <p className="text-xs text-slate-500 mt-1">Pantau dan kelola seluruh ulasan masuk dari pengguna layanan Netto Laundry.</p>
+            <p className="text-xs font-bold text-slate-400 max-w-xl">
+              Pantau dan kelola seluruh ulasan masuk dari pengguna layanan Netto Laundry.
+            </p>
           </div>
-          
-          {/* Consolidated Rating Card */}
-          <div className="bg-white px-4 py-3 rounded-xl border border-slate-200/60 shadow-sm flex items-center gap-4 shrink-0">
-            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Rating Rata-rata</p>
-              <h2 className="text-xl font-extrabold text-slate-900 tracking-tight mt-0.5">
-                4.8 <span className="text-xs font-normal text-slate-400">/ 5.0</span>
+
+          {/* CONSOLIDATED RATING CARD */}
+          <div className="rounded-[1.5rem] bg-blue-600 p-5 text-white shadow-lg shadow-blue-100 flex items-center gap-4 shrink-0 relative overflow-hidden group">
+            <div className="relative z-10">
+              <p className="text-[9px] font-black uppercase tracking-widest text-blue-200">Rating Rata-rata</p>
+              <h2 className="text-2xl font-black tracking-tight mt-0.5">
+                4.8 <span className="text-xs font-normal text-blue-200">/ 5.0</span>
               </h2>
+              <div className="flex text-yellow-300 mt-1 gap-0.5">
+                {[...Array(5)].map((_, idx) => (
+                  <HiStar key={idx} size={14} className={idx < 4 ? "text-yellow-300" : "text-blue-400"} />
+                ))}
+              </div>
             </div>
-            <div className="flex text-amber-400 gap-0.5">
-              <HiStar size={16} /> 
-              <HiStar size={16} /> 
-              <HiStar size={16} /> 
-              <HiStar size={16} /> 
-              <HiStar size={16} className="text-slate-200" />
-            </div>
+            <div className="absolute -right-2 -bottom-2 w-14 h-14 bg-white/10 rounded-full blur-xl group-hover:bg-white/20 transition-all" />
           </div>
         </div>
 
-        {/* Feedback List Container */}
-        <div className="space-y-4">
+        {/* FEEDBACK LIST CONTAINER */}
+        <div className="space-y-5 relative z-10">
           {reviews.map((r, i) => (
-            <div key={i} className="group bg-white p-5 md:p-6 rounded-xl border border-slate-200/60 shadow-sm hover:border-slate-300 transition-all">
+            <div key={i} className="rounded-[2rem] border border-slate-100 bg-slate-50/50 p-6 md:p-7 space-y-4 hover:border-blue-100 hover:bg-white transition-all shadow-sm group">
               <div className="flex items-start gap-4">
                 
-                {/* Modern Fixed Avatar */}
-                <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-700 font-bold text-xs shrink-0 border border-slate-200/40">
+                {/* Modern Rounded Avatar */}
+                <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 font-black text-sm shrink-0 border border-blue-100/50 shadow-inner">
                   {r.avatar}
                 </div>
 
                 <div className="flex-1 min-w-0">
                   {/* Top Metadata Row */}
-                  <div className="flex items-start justify-between gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <h4 className="font-semibold text-slate-900 text-sm leading-none">{r.user}</h4>
-                        <HiOutlineBadgeCheck className="text-emerald-600" size={16} title="Verified Customer" />
+                        <h4 className="font-black text-slate-800 text-sm tracking-tight">{r.user}</h4>
+                        <HiOutlineBadgeCheck className="text-blue-500" size={16} title="Verified Customer" />
                       </div>
                       
-                      {/* Dynamic Star Generator */}
-                      <div className="flex text-amber-400 mt-1.5 gap-0.5">
+                      {/* Star Rating */}
+                      <div className="flex text-amber-400 mt-1 gap-0.5">
                         {[...Array(5)].map((_, idx) => (
                           <HiStar key={idx} size={14} className={idx < r.rate ? "text-amber-400" : "text-slate-200"} />
                         ))}
                       </div>
                     </div>
 
-                    {/* Minimalist Status Badge */}
-                    <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border ${
+                    {/* Dynamic Status Badge */}
+                    <span className={`self-start sm:self-center inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider border ${
                       r.tag === "Puas" 
-                        ? "bg-emerald-50 text-emerald-700 border-emerald-200/40" 
-                        : "bg-amber-50 text-amber-700 border-amber-200/40"
+                        ? "bg-emerald-50 text-emerald-600 border-emerald-100" 
+                        : "bg-amber-50 text-amber-600 border-amber-100"
                     }`}>
-                      {r.tag === "Puas" ? <HiThumbUp size={11} /> : <HiThumbDown size={11} />}
+                      {r.tag === "Puas" ? <HiThumbUp size={12} /> : <HiThumbDown size={12} />}
                       {r.tag}
                     </span>
                   </div>
 
-                  {/* Clean Content Area */}
-                  <div className="mt-3.5">
-                    <p className="text-xs text-slate-600 leading-relaxed font-normal">
-                      {r.comment}
+                  {/* Comment Content Area */}
+                  <div className="mt-4">
+                    <p className="text-xs text-slate-600 leading-relaxed font-bold italic">
+                      "{r.comment}"
                     </p>
                   </div>
 
-                  {/* Structured Action Footer */}
-                  <div className="mt-5 pt-3.5 border-t border-slate-100 flex justify-between items-center text-[11px] font-bold">
-                    <span className="text-slate-400 flex items-center gap-1 font-medium">
-                      <MdOutlineRateReview size={14} /> Dikirim {r.date}
+                  {/* Action Footer */}
+                  <div className="mt-5 pt-4 border-t border-slate-100/60 flex justify-between items-center text-[10px] font-bold uppercase tracking-wider">
+                    <span className="text-slate-400 flex items-center gap-1.5 font-medium normal-case text-xs">
+                      <MdOutlineRateReview size={16} className="text-blue-500" /> Dikirim {r.date}
                     </span>
-                    <button className="text-slate-400 hover:text-emerald-600 transition-colors uppercase tracking-wide">
-                      Balas Review
+                    <button className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all cursor-pointer">
+                      <HiReply size={14} /> Balas Review
                     </button>
                   </div>
                 </div>
@@ -125,9 +138,9 @@ export default function Feedback() {
           ))}
         </div>
 
-        {/* Pagination Trigger Container */}
-        <div className="pt-4 flex justify-center">
-          <button className="inline-flex items-center justify-center bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 text-xs font-semibold px-5 py-2 rounded-lg shadow-sm transition-colors active:scale-98">
+        {/* PAGINATION BUTTON */}
+        <div className="pt-4 flex justify-center relative z-10">
+          <button className="inline-flex items-center justify-center bg-white border border-slate-100 text-slate-500 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50/50 text-xs font-bold px-6 py-3 rounded-xl transition-all active:scale-95 cursor-pointer shadow-sm">
             Muat Ulasan Terdahulu
           </button>
         </div>

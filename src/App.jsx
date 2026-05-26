@@ -22,6 +22,9 @@ const Segmentation = lazy(() => import("./pages/Segmentation"));
 const Feedback = lazy(() => import("./pages/Feedback"));
 const Products = lazy(() => import("./pages/Products"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const ProfilAdmin = lazy(() => import("./pages/ProfilAdmin"));
+const Settings = lazy(() => import("./pages/Settings"));
+const AllMembers = lazy(() => import("./pages/AllMembers"));
 
 /* Auth */
 const Login = lazy(() => import("./pages/auth/Login"));
@@ -61,6 +64,8 @@ function App() {
           <Route path="/members" element={<Member />} />
           <Route path="/members/add" element={<AddMember />} />
           <Route path="/members/:id/edit" element={<AddMember />} />
+          {/* Rute baru diletakkan di sini sebelum dynamic parameter :id */}
+          <Route path="/members/all" element={<AllMembers />} />
           <Route path="/members/:id" element={<MemberDetail />} />
 
           {/* PRODUCTS */}
@@ -77,6 +82,7 @@ function App() {
           <Route path="/loyalty" element={<Loyalty />} />
           <Route path="/segmentation" element={<Segmentation />} />
           <Route path="/feedback" element={<Feedback />} />
+          <Route path="/profil-admin" element={<ProfilAdmin />} />
 
           {/* REPORTS */}
           <Route path="/reports" element={<Laporan />} />

@@ -1,98 +1,176 @@
-import { Link } from "react-router-dom";
-import { HiOutlineMail, HiOutlineLockClosed, HiOutlineUser, HiOutlineUserAdd } from "react-icons/hi";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { 
+  HiOutlineMail, 
+  HiOutlineLockClosed, 
+  HiOutlineUser, 
+  HiSparkles,
+  HiArrowSmRight,
+  HiEye,
+  HiEyeOff
+} from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
 
 export default function Register() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    alert("Akun admin berhasil didaftarkan!");
+    navigate("/login");
+  };
+
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(26,188,156,0.18),_transparent_30%),_radial-gradient(circle_at_bottom_right,_rgba(26,188,156,0.12),_transparent_25%),_linear-gradient(to_bottom,_#F8FAFB_0%,_#E8F8F5_100%)] flex items-center justify-center p-4">
-      <div className="w-full max-w-6xl rounded-[2rem] overflow-hidden shadow-2xl bg-white grid grid-cols-1 md:grid-cols-2">
-        <div className="hidden md:flex flex-col justify-between bg-[#1ABC9C] text-white p-12 gap-8">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-xs font-black uppercase tracking-[0.25em]">
-              Laundry Partner
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#F0F7FF] via-[#F8FAFC] to-[#E0F2FE] flex items-center justify-center p-4 md:p-8 text-[#0F172A] antialiased font-sans relative overflow-hidden">
+      
+      {/* ELEMEN DEKORATIF GLOWING BACKGROUND */}
+      <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-sky-400/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="w-full max-w-5xl rounded-[2.5rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(2,132,199,0.1)] bg-white/80 backdrop-blur-xl border border-white/60 grid grid-cols-1 lg:grid-cols-12 relative z-10 transition-all">
+        
+        {/* PANEL KIRI: BRANDING & UTILITY INFO */}
+        <div className="hidden lg:flex lg:col-span-5 flex-col justify-between bg-gradient-to-br from-[#2563EB] to-[#0284C7] text-white p-10 relative overflow-hidden">
+          <div className="absolute -right-10 -bottom-10 w-44 h-44 bg-white/10 rounded-full blur-xl"></div>
+          
+          <div className="space-y-8 relative z-10">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-[10px] font-black uppercase tracking-[0.25em] border border-white/10">
+              <HiSparkles className="animate-pulse text-sky-200" /> Laundry Partner
             </div>
-            <h2 className="mt-8 text-4xl font-black leading-tight">Buat akun admin Anda dengan mudah.</h2>
-            <p className="mt-6 max-w-xs text-slate-100/90 leading-relaxed">Kelola anggota, pesanan, dan laporan dari dashboard yang bersih untuk bisnis laundry.</p>
+            <div className="space-y-3">
+              <h2 className="text-3xl font-black leading-tight italic uppercase">
+                GROW YOUR <br/><span className="text-sky-200 not-italic">LAUNDRY BUSINESS</span>
+              </h2>
+              <p className="text-xs font-medium text-sky-50/80 leading-relaxed">
+                Satu dashboard terpusat untuk mengontrol data pelanggan CRM, timbangan antrean kasir, hingga laporan omzet digital.
+              </p>
+            </div>
           </div>
 
-          <div className="space-y-4">
-            <div className="rounded-[1.75rem] bg-white/10 p-5 shadow-inner">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-100/80">Pendaftaran cepat</p>
-              <p className="mt-2 text-sm text-slate-100/85">Daftar cepat dan mulai pantau pertumbuhan bisnis Anda.</p>
+          <div className="space-y-3 relative z-10">
+            <div className="rounded-2xl bg-white/10 border border-white/5 p-4 shadow-xs backdrop-blur-xs">
+              <p className="text-[10px] font-black uppercase tracking-wider text-sky-200">Pendaftaran Instan</p>
+              <p className="mt-1 text-xs text-sky-50/90 font-medium">Buat akun dalam hitungan detik dan langsung siap pakai di perangkat kasir mana pun.</p>
             </div>
-            <div className="rounded-[1.75rem] bg-white/10 p-5 shadow-inner">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-100/80">Siap berkembang</p>
-              <p className="mt-2 text-sm text-slate-100/85">Dirancang untuk admin yang ingin alur kerja laundry efisien.</p>
+            <div className="rounded-2xl bg-white/10 border border-white/5 p-4 shadow-xs backdrop-blur-xs">
+              <p className="text-[10px] font-black uppercase tracking-wider text-sky-200">Keamanan Data CRM</p>
+              <p className="mt-1 text-xs text-sky-50/90 font-medium">Database pelanggan tersimpan rapi menggunakan skema enkripsi modern.</p>
             </div>
           </div>
         </div>
 
-        <div className="p-8 md:p-16 bg-white">
-          <div className="md:hidden mb-8">
-            <div className="relative w-full h-64 rounded-[2rem] overflow-hidden bg-[#F8FAFB] shadow-lg">
+        {/* PANEL KANAN: FORM REGISTRASI */}
+        <div className="p-6 md:p-10 lg:col-span-7 bg-white flex flex-col justify-center">
+          
+          <div className="lg:hidden mb-6">
+            <div className="relative w-full h-40 rounded-2xl overflow-hidden bg-slate-50 border border-slate-100">
               <img
                 src="https://img.freepik.com/free-vector/laundry-service-concept-illustration_114360-8438.jpg"
                 alt="Register Illustration"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover opacity-85"
               />
-              <div className="absolute inset-0 bg-[#1ABC9C]/15 mix-blend-multiply"></div>
+              <div className="absolute inset-0 bg-blue-500/10 mix-blend-multiply"></div>
             </div>
           </div>
 
-          <div className="mb-10">
-            <div className="text-xs uppercase tracking-[0.3em] text-slate-400 font-black mb-3">Buat akun</div>
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900">Bergabung dengan tim admin laundry Anda.</h2>
-            <p className="mt-3 text-sm text-slate-500">Isi beberapa detail untuk mulai mengelola operasional Anda dengan jelas.</p>
+          <div className="mb-6">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-slate-400 font-black block mb-1">
+              START FOR FREE
+            </span>
+            <h2 className="text-2xl md:text-3xl font-black text-slate-800 tracking-tight">
+              Daftar Akun Admin Baru
+            </h2>
+            <p className="mt-1 text-xs font-medium text-slate-400">
+              Lengkapi formulir di bawah untuk bergabung ke sistem manajemen Netto Laundry.
+            </p>
           </div>
 
-          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase text-slate-500 ml-1">Nama Lengkap</label>
-              <div className="relative">
+          <form className="space-y-4" onSubmit={handleRegister}>
+            
+            {/* INPUT NAMA LENGKAP */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black uppercase tracking-wider text-slate-400 pl-1">Nama Lengkap</label>
+              <div className="relative group">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                  <HiOutlineUser size={18} />
+                </span>
                 <input
                   type="text"
-                  placeholder="Masukkan nama lengkap"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3.5 px-12 outline-none focus:border-[#1ABC9C] transition-all"
+                  required
+                  placeholder="Masukkan nama lengkap..."
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full rounded-2xl border border-slate-200/80 bg-slate-50/40 pl-11 pr-4 py-3 text-xs font-bold text-slate-800 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 shadow-inner"
                 />
-                <HiOutlineUser className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-slate-400" />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase text-slate-500 ml-1">Email</label>
-              <div className="relative">
+            {/* INPUT EMAIL */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black uppercase tracking-wider text-slate-400 pl-1">Email Kerja</label>
+              <div className="relative group">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                  <HiOutlineMail size={18} />
+                </span>
                 <input
                   type="email"
-                  placeholder="nama@laundry.com"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3.5 px-12 outline-none focus:border-[#1ABC9C] transition-all"
+                  required
+                  placeholder="nama@nettolaundry.com"
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full rounded-2xl border border-slate-200/80 bg-slate-50/40 pl-11 pr-4 py-3 text-xs font-bold text-slate-800 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 shadow-inner"
                 />
-                <HiOutlineMail className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-slate-400" />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase text-slate-500 ml-1">Password</label>
-              <div className="relative">
+            {/* INPUT PASSWORD */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black uppercase tracking-wider text-slate-400 pl-1">Kata Sandi (Password)</label>
+              <div className="relative group">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                  <HiOutlineLockClosed size={18} />
+                </span>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
+                  required
                   placeholder="••••••••"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3.5 px-12 outline-none focus:border-[#1ABC9C] transition-all"
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  className="w-full rounded-2xl border border-slate-200/80 bg-slate-50/40 pl-11 pr-12 py-3 text-xs font-bold text-slate-800 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 shadow-inner"
                 />
-                <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-slate-400" />
+                <button 
+                  type="button" 
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                >
+                  {showPassword ? <HiEyeOff size={18} /> : <HiEye size={18} />}
+                </button>
               </div>
             </div>
 
-            <button type="submit" className="w-full bg-[#1ABC9C] hover:bg-[#16A085] text-white font-black py-4 rounded-2xl shadow-lg mt-4 transition-all">
-              Daftar
-            </button>
+            {/* ACTION BUTTONS */}
+            <div className="pt-2 space-y-3">
+              <button 
+                type="submit" 
+                className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-sky-600 px-6 py-3.5 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-blue-500/20 transition-all hover:shadow-xl hover:shadow-blue-500/30 hover:brightness-105 active:scale-[0.98] cursor-pointer"
+              >
+                Buat Akun Admin <HiArrowSmRight size={16} />
+              </button>
 
-            <button type="button" className="w-full bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-4 rounded-2xl flex items-center justify-center gap-3">
-              <FcGoogle className="text-2xl" /> Daftar dengan Google
-            </button>
+              <button 
+                type="button" 
+                className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-white border border-slate-200/80 hover:bg-slate-50 py-3.5 text-xs font-black text-slate-600 transition-all cursor-pointer shadow-2xs"
+              >
+                <FcGoogle size={18} /> Register dengan Google
+              </button>
+            </div>
           </form>
 
-          <p className="text-center mt-8 text-sm font-medium text-slate-500">
-            Sudah punya akun? <Link to="/login" className="text-[#1ABC9C] font-black hover:underline">Masuk di sini</Link>
+          {/* FOOTER SWITCH TO LOGIN */}
+          <p className="text-center mt-6 text-xs font-bold text-slate-400">
+            Sudah terdaftar sebagai tim?{" "}
+            <Link to="/login" className="text-blue-600 font-black hover:text-blue-700 hover:underline transition-colors">
+              Masuk di sini
+            </Link>
           </p>
         </div>
       </div>

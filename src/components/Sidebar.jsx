@@ -1,6 +1,5 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-// Import icon yang sesuai dengan fungsionalitas baru
 import { 
   MdDashboard, 
   MdPeople, 
@@ -12,156 +11,114 @@ import {
   MdTimeline, 
   MdChatBubble, 
   MdBarChart, 
-  MdSettings,
   MdShield 
 } from "react-icons/md";
-
-const T = {
-  primary: "#0EA5E9", // Biru Aqua Laundry Premium
-  primaryDark: "#0369A1",
-  primaryMedium: "#0891B2",
-  textMuted: "#64748B",
-  textActive: "#1E293B",
-  surface: "#FFFFFF",
-  border: "#B3E5FC",
-  bgLight: "#F0F9FF"
-};
 
 export default function Sidebar({ collapsed }) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Menu Lengkap Berdasarkan Referensi Gambar
+  // Menu Lengkap Sinkron Dengan Kebutuhan Modul Admin
   const menuItems = [
-    { icon: <MdDashboard />, label: "Dashboard", path: "/" },
-    { icon: <MdPeople />, label: "Pelanggan", path: "/members" },
-    { icon: <MdLocalLaundryService />, label: "Produk Laundry", path: "/products" },
-    { icon: <MdReceipt />, label: "Transaksi", path: "/orders" },
-    { icon: <MdLocationOn />, label: "Tracking Laundry", path: "/tracking" },
-    { icon: <MdNotifications />, label: "Notifikasi", path: "/notifications" },
-    { icon: <MdStar />, label: "Program Loyalitas", path: "/loyalty" },
-    { icon: <MdTimeline />, label: "Segmentasi", path: "/segmentation" },
-    { icon: <MdChatBubble />, label: "Feedback", path: "/feedback" },
-    { icon: <MdBarChart />, label: "Laporan CRM", path: "/reports" },
+    { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/" },
+    { icon: <MdPeople size={20} />, label: "Pelanggan", path: "/members" },
+    { icon: <MdLocalLaundryService size={20} />, label: "Produk Laundry", path: "/products" },
+    { icon: <MdReceipt size={20} />, label: "Transaksi", path: "/orders" },
+    { icon: <MdLocationOn size={20} />, label: "Tracking Laundry", path: "/tracking" },
+    { icon: <MdNotifications size={20} />, label: "Notifikasi", path: "/notifications" },
+    { icon: <MdStar size={20} />, label: "Program Loyalitas", path: "/loyalty" },
+    { icon: <MdTimeline size={20} />, label: "Segmentasi", path: "/segmentation" },
+    { icon: <MdChatBubble size={20} />, label: "Feedback", path: "/feedback" },
+    { icon: <MdBarChart size={20} />, label: "Laporan CRM", path: "/reports" },
   ];
 
   return (
-    <aside style={{ 
-      width: collapsed ? 90 : 260, 
-      background: T.surface, 
-      padding: "30px 20px", 
-      display: "flex", 
-      flexDirection: "column", 
-      borderRight: `1px solid ${T.border}`,
-      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-      height: "100vh"
-    }}>
+    <aside 
+      className={`h-screen bg-white border-r border-slate-100 flex flex-col p-6 font-sans text-[#0F172A] antialiased select-none transition-all duration-300 ease-in-out shrink-0 sticky top-0 ${
+        collapsed ? "w-[88px]" : "w-[260px]"
+      }`}
+    >
       
-      {/* Logo Netto Laundry */}
-      <div style={{ 
-        display: "flex", alignItems: "center", gap: 12, 
-        paddingLeft: 10, marginBottom: 30, overflow: "hidden" 
-      }}>
-        <div style={{ 
-          width: 35, height: 35, borderRadius: 10, background: T.primary, 
-          display: "flex", alignItems: "center", justifyContent: "center", 
-          color: "#fff", fontWeight: "800", fontSize: 20, flexShrink: 0,
-          boxShadow: `0 4px 10px rgba(26, 188, 156, 0.3)`
-        }}>N</div>
+      {/* BRAND LOGO NETTO LAUNDRY */}
+      <div 
+        onClick={() => navigate("/")}
+        className={`flex items-center gap-3 mb-8 cursor-pointer overflow-hidden transition-all duration-200 ${
+          collapsed ? "justify-center px-0" : "px-1"
+        }`}
+      >
+        <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center text-white font-black text-lg shadow-md shadow-blue-100 shrink-0">
+          N
+        </div>
         {!collapsed && (
-          <span style={{ 
-            fontWeight: 800, fontSize: 20, color: "#11142D", 
-            letterSpacing: "-1px", fontFamily: "'Inter', sans-serif" 
-          }}>
-            NETTO<span style={{ color: T.primary }}>.</span>
+          <span className="text-xl font-black tracking-tight text-slate-800 italic uppercase">
+            Netto<span className="text-blue-600 font-black not-italic">.</span>
           </span>
         )}
       </div>
 
+      {/* SECTION TITLE */}
       {!collapsed && (
-        <p style={{ 
-          fontSize: "11px", 
-          fontWeight: "800", 
-          color: T.textMuted, 
-          marginBottom: "15px", 
-          paddingLeft: "15px",
-          letterSpacing: "1px"
-        }}>
-          MENU UTAMA
+        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-2.5 mb-3">
+          Menu Utama
         </p>
       )}
 
-      {/* Navigasi Menu - Scrollable jika menu banyak */}
-      <nav style={{ 
-        display: "flex", 
-        flexDirection: "column", 
-        gap: 4, 
-        overflowY: "auto",
-        paddingRight: "5px" 
-      }}>
+      {/* NAVIGATION INTERFACE */}
+      <nav className="flex flex-col gap-1 overflow-y-auto pr-1 flex-1 max-h-[calc(100vh-210px)] scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {menuItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
             <div 
               key={item.path}
               onClick={() => navigate(item.path)}
-              style={{
-                display: "flex", alignItems: "center", gap: 15, padding: "12px 15px", 
-                borderRadius: 12, cursor: "pointer", transition: "0.2s",
-                background: isActive ? "rgba(26, 188, 156, 0.1)" : "transparent",
-                color: isActive ? T.primary : T.textMuted,
-              }}
+              className={`flex items-center gap-3.5 px-3 py-2.5 rounded-2xl cursor-pointer transition-all duration-150 relative active:scale-98 group ${
+                isActive 
+                  ? "bg-blue-50 text-blue-600 font-black" 
+                  : "text-slate-400 hover:text-slate-700 hover:bg-slate-50/60 font-bold"
+              } ${collapsed ? "justify-center" : ""}`}
             >
-              <span style={{ 
-                fontSize: 22, display: "flex", 
-                color: isActive ? T.primary : "#B2B3BD" 
-              }}>
+              <span className={`shrink-0 transition-colors ${isActive ? "text-blue-600" : "text-slate-400/80 group-hover:text-slate-500"}`}>
                 {item.icon}
               </span>
+              
               {!collapsed && (
-                <span style={{ 
-                  fontWeight: isActive ? "700" : "600", 
-                  fontSize: "14px", flex: 1 
-                }}>
+                <span className="text-xs tracking-wide flex-1 whitespace-nowrap">
                   {item.label}
                 </span>
               )}
+
+              {/* ACTIVE DOT INDICATOR */}
               {!collapsed && isActive && (
-                <div style={{ 
-                  width: 6, height: 6, borderRadius: "50%", 
-                  background: T.primary, boxShadow: `0 0 8px ${T.primary}` 
-                }} />
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-600 shadow-md shadow-blue-400 shrink-0" />
+              )}
+
+              {/* TOOLTIP ON COLLAPSED STATE */}
+              {collapsed && (
+                <div className="absolute left-[76px] invisible opacity-0 scale-95 group-hover:visible group-hover:opacity-100 group-hover:scale-100 transition-all z-50 bg-slate-900 text-white text-[11px] font-black px-3 py-2 rounded-xl whitespace-nowrap pointer-events-none shadow-xl border border-slate-800">
+                  {item.label}
+                </div>
               )}
             </div>
           );
         })}
       </nav>
 
-      {/* Security Card Tetap di Bawah */}
+      {/* SECURITY ACCESS CARD (STICKY BOTTOM) */}
       {!collapsed && (
-        <div style={{ 
-          marginTop: "auto", background: T.primary, borderRadius: 24, 
-          padding: "20px", color: "#fff", position: "relative", overflow: "hidden",
-          boxShadow: `0 10px 20px rgba(26, 188, 156, 0.2)`
-        }}>
-          <div style={{ position: "relative", zIndex: 2 }}>
-            <div style={{ 
-              width: 32, height: 32, borderRadius: "50%", 
-              background: "rgba(255,255,255,0.2)", 
-              display: "flex", alignItems: "center", justifyContent: "center", 
-              marginBottom: 12 
-            }}>
-              <MdShield size={18} color="#fff" />
+        <div className="mt-auto bg-gradient-to-br from-blue-600 to-blue-700 rounded-[1.5rem] p-4 text-white relative overflow-hidden shadow-lg shadow-blue-100 border border-blue-500/10">
+          <div className="relative z-10 space-y-2">
+            <div className="w-8 h-8 rounded-xl bg-white/15 border border-white/10 flex items-center justify-center shadow-inner">
+              <MdShield size={16} className="text-white" />
             </div>
-            <p style={{ fontWeight: 700, fontSize: "14px", margin: 0 }}>Keamanan Data</p>
-            <p style={{ fontSize: "11px", opacity: 0.8, margin: "4px 0 15px", lineHeight: "1.4" }}>
-              Sesi aktif sebagai Supervisor Netto.
-            </p>
+            <div>
+              <p className="text-xs font-black tracking-wide">Keamanan Data</p>
+              <p className="text-[10px] text-blue-100/80 font-bold leading-normal mt-0.5">
+                Sesi aktif sebagai Supervisor Netto.
+              </p>
+            </div>
           </div>
-          <div style={{ 
-            position: "absolute", bottom: -20, right: -20, width: 80, height: 80, 
-            background: "rgba(255,255,255,0.15)", borderRadius: "50%" 
-          }} />
+          {/* Decorative Blur Circle Accent */}
+          <div className="absolute -bottom-6 -right-6 w-20 h-20 bg-white/10 rounded-full blur-sm pointer-events-none" />
         </div>
       )}
     </aside>

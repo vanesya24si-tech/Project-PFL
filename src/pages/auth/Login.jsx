@@ -1,12 +1,18 @@
 ﻿import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { HiOutlineMail, HiOutlineLockClosed, HiLogin } from "react-icons/hi";
-import { MdOutlineInventory2 } from "react-icons/md";
-import { FcGoogle } from "react-icons/fc";
+import { 
+  HiOutlineMail, 
+  HiOutlineLockClosed, 
+  HiEye, 
+  HiEyeOff,
+  HiArrowSmRight,
+  HiSparkles
+} from "react-icons/hi";
 
 export default function Login() {
   const navigate = useNavigate();
   const [dataForm, setDataForm] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,62 +21,124 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_35%),_radial-gradient(circle_at_bottom_right,_rgba(16,185,129,0.1),_transparent_30%),_linear-gradient(to_bottom,_#F6FEF7_0%,_#ECF9F0_100%)] flex items-center justify-center p-6">
-      <div className="w-full max-w-4xl rounded-[2rem] overflow-hidden shadow-[0_40px_120px_rgba(16,185,129,0.12)] bg-white">
-        <div className="p-8 md:p-12">
-          <div className="flex flex-col items-center gap-4 text-center">
-            <img src="/logo192.png" alt="Netto Logo" className="h-16 w-16 rounded-full bg-[#10B981]/10 p-3" />
-            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#10B981]">Customer Relationship Management</p>
-            <h1 className="text-5xl font-extrabold text-[#0F172A]">Selamat Datang</h1>
-            <p className="max-w-xl text-sm text-[#475569]">Masuk ke panel admin Netto Laundry CRM untuk mengelola pelanggan, transaksi, notifikasi, dan laporan dalam satu platform.</p>
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#F0F7FF] via-[#F8FAFC] to-[#E0F2FE] flex items-center justify-center p-4 md:p-8 text-[#0F172A] antialiased font-sans relative overflow-hidden">
+      
+      {/* ELEMEN DEKORATIF GLOWING BACKGROUND */}
+      <div className="absolute -top-40 -left-40 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-sky-400/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="w-full max-w-md bg-white/80 backdrop-blur-xl rounded-[2.5rem] border border-white/60 shadow-[0_32px_64px_-16px_rgba(2,132,199,0.1)] p-6 md:p-8 relative z-10 transition-all">
+        
+        {/* LOGO & BRANDING */}
+        <div className="flex flex-col items-center text-center space-y-4">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-blue-400/20 rounded-full blur-md group-hover:blur-xl transition-all duration-300"></div>
+            <img 
+              src="/logo192.png" 
+              alt="Netto Logo" 
+              className="relative h-16 w-16 rounded-3xl bg-gradient-to-br from-[#2563EB] to-[#0284C7] p-3 shadow-md border border-blue-300/30" 
+            />
           </div>
-
-          <div className="mt-10 bg-[#F8FEF8] border border-[#DCFCE7] rounded-[2rem] p-8 shadow-sm">
-            <h2 className="text-2xl font-bold text-[#0F172A]">Login</h2>
-            <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-3">
-                  <label className="text-xs font-semibold uppercase tracking-[0.25em] text-[#475569]">Email Address</label>
-                  <input
-                    type="email"
-                    placeholder="namaemail@gmail.com"
-                    className="w-full rounded-3xl border border-[#D1FAE5] bg-white px-5 py-4 text-sm text-[#0F172A] outline-none transition focus:border-[#10B981] focus:ring-2 focus:ring-[#10B981]/20"
-                    onChange={(e) => setDataForm({ ...dataForm, email: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="text-xs font-semibold uppercase tracking-[0.25em] text-[#475569]">Password</label>
-                  <div className="relative">
-                    <input
-                      type="password"
-                      placeholder="••••••••"
-                      className="w-full rounded-3xl border border-[#D1FAE5] bg-white px-5 py-4 text-sm text-[#0F172A] outline-none transition focus:border-[#10B981] focus:ring-2 focus:ring-[#10B981]/20"
-                      onChange={(e) => setDataForm({ ...dataForm, password: e.target.value })}
-                    />
-                    <button type="button" className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                      <MdOutlineInventory2 className="text-lg" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-sm text-[#475569]">
-                <label className="inline-flex items-center gap-2">
-                  <input type="checkbox" className="h-4 w-4 rounded border-[#D1FAE5] accent-[#10B981]" />
-                  Ingat saya
-                </label>
-                <Link to="/forgot" className="text-[#10B981] font-semibold hover:text-[#047857] transition-colors">Lupa password?</Link>
-              </div>
-
-              <button type="submit" className="w-full rounded-[1.5rem] bg-[#10B981] px-6 py-4 text-base font-semibold text-white shadow-lg shadow-[#10B981]/20 transition hover:bg-[#0f766e]">
-                Login
-              </button>
-            </form>
-
-            <p className="mt-6 text-center text-sm text-[#64748B]">
-              Belum punya akun? <Link to="/register" className="font-semibold text-[#10B981] hover:text-[#047857]">Daftar sekarang</Link>
+          
+          <div className="space-y-1">
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 flex items-center justify-center gap-1">
+              NETTO LAUNDRY <HiSparkles className="animate-pulse" />
+            </p>
+            <h1 className="text-3xl font-black tracking-tight text-slate-800 uppercase italic">
+              WELCOME <span className="text-blue-500 font-black not-italic">BACK</span>
+            </h1>
+            <p className="text-xs font-medium text-slate-400 max-w-xs mx-auto">
+              Masuk ke panel CRM untuk memantau aktivitas pelanggan dan antrean laundry secara real-time.
             </p>
           </div>
+        </div>
+
+        {/* BOX FORM UTAMA */}
+        <div className="mt-8">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            
+            {/* INPUT EMAIL */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black uppercase tracking-wider text-slate-400 pl-1">
+                Email Address
+              </label>
+              <div className="relative group">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                  <HiOutlineMail size={18} />
+                </span>
+                <input
+                  type="email"
+                  required
+                  placeholder="namaemail@gmail.com"
+                  onChange={(e) => setDataForm({ ...dataForm, email: e.target.value })}
+                  className="w-full rounded-2xl border border-slate-200/80 bg-slate-50/40 pl-11 pr-4 py-3.5 text-xs font-bold text-slate-800 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 shadow-inner"
+                />
+              </div>
+            </div>
+
+            {/* INPUT PASSWORD */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black uppercase tracking-wider text-slate-400 pl-1">
+                Password
+              </label>
+              <div className="relative group">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                  <HiOutlineLockClosed size={18} />
+                </span>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  placeholder="••••••••"
+                  onChange={(e) => setDataForm({ ...dataForm, password: e.target.value })}
+                  className="w-full rounded-2xl border border-slate-200/80 bg-slate-50/40 pl-11 pr-12 py-3.5 text-xs font-bold text-slate-800 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 shadow-inner"
+                />
+                <button 
+                  type="button" 
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                >
+                  {showPassword ? <HiEyeOff size={18} /> : <HiEye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            {/* REMEMBER ME & FORGOT PASSWORD */}
+            <div className="flex items-center justify-between text-xs font-bold pt-1 select-none">
+              <label className="inline-flex items-center gap-2 cursor-pointer text-slate-500 group">
+                <input 
+                  type="checkbox" 
+                  className="h-4 w-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500/10 cursor-pointer" 
+                />
+                <span className="group-hover:text-slate-700 transition-colors">Ingat saya</span>
+              </label>
+              <Link 
+                to="/forgot" 
+                className="text-blue-600 hover:text-blue-700 hover:underline tracking-tight transition-all"
+              >
+                Lupa password?
+              </Link>
+            </div>
+
+            {/* SUBMIT BUTTON */}
+            <button 
+              type="submit" 
+              className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-sky-600 px-6 py-4 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-blue-500/20 transition-all hover:shadow-xl hover:shadow-blue-500/30 hover:brightness-105 active:scale-[0.98] cursor-pointer mt-2"
+            >
+              Masuk ke Dashboard <HiArrowSmRight size={16} />
+            </button>
+          </form>
+
+          {/* REGISTER FOOTER */}
+          <div className="mt-6 border-t border-slate-100 pt-4 text-center text-xs font-bold text-slate-400">
+            Belum punya akun admin?{" "}
+            <Link 
+              to="/register" 
+              className="text-blue-600 hover:text-blue-700 hover:underline transition-colors"
+            >
+              Daftar sekarang
+            </Link>
+          </div>
+
         </div>
       </div>
     </div>
