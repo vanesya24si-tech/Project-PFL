@@ -1,12 +1,17 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import { HiClock, HiCheckCircle, HiSearch, HiPrinter } from "react-icons/hi";
 import { MdLocalLaundryService, MdIron, MdLayers, MdArrowForward } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
+import { Separator } from "../components/ui/Separator";
+import { Switch } from "../components/ui/Switch";
+import { Tooltip } from "../components/ui/Tooltip";
 
 export default function Tracking() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [activePrintOrder, setActivePrintOrder] = useState(null);
+  const [showUnpaidOnly, setShowUnpaidOnly] = useState(false);
   
-  // State dengan data yang jauh lebih banyak dan variatif
+  // State data tracking laundry
   const [tracks, setTracks] = useState([
     { 
       id: "ORD-001", 
@@ -17,6 +22,7 @@ export default function Tracking() {
       eta: "14:30",
       weight: "5 Kg",
       service: "Express Kiloan",
+      price: 50000,
       isPaid: true
     },
     { 
@@ -28,6 +34,7 @@ export default function Tracking() {
       eta: "18:00",
       weight: "4.5 Kg",
       service: "Reguler Cuci Setrika",
+      price: 36000,
       isPaid: true
     },
     { 
@@ -39,6 +46,7 @@ export default function Tracking() {
       eta: "17:00",
       weight: "3 Kg",
       service: "Reguler Setrika Saja",
+      price: 18000,
       isPaid: false
     },
     { 
@@ -50,6 +58,7 @@ export default function Tracking() {
       eta: "15:15",
       weight: "6.2 Kg",
       service: "Express Kiloan",
+      price: 62000,
       isPaid: true
     },
     { 
@@ -61,6 +70,7 @@ export default function Tracking() {
       eta: "Selesai",
       weight: "1 Pcs",
       service: "Bedcover Jumbo",
+      price: 35000,
       isPaid: true
     },
     { 
@@ -72,6 +82,7 @@ export default function Tracking() {
       eta: "Besok 10:00",
       weight: "8 Kg",
       service: "Reguler Cuci Setrika",
+      price: 64000,
       isPaid: false
     },
     { 
@@ -83,6 +94,7 @@ export default function Tracking() {
       eta: "16:45",
       weight: "2 Pcs",
       service: "Jas & Celana Formal",
+      price: 45000,
       isPaid: true
     },
     { 
@@ -94,6 +106,7 @@ export default function Tracking() {
       eta: "Selesai",
       weight: "4 Kg",
       service: "Cuci Lipat Fast",
+      price: 32000,
       isPaid: false
     }
   ]);
@@ -105,7 +118,6 @@ export default function Tracking() {
     { label: "Ready", color: "bg-green-600", text: "text-green-600" }
   ];
 
-  // Fungsi interaktif Admin untuk menaikkan step status laundry
   const handleNextStep = (id) => {
     setTracks(prevTracks => prevTracks.map(track => {
       if (track.id === id && track.currentStep < 3) {
@@ -122,12 +134,21 @@ export default function Tracking() {
     }));
   };
 
+  // Fungsi Pemicu Cetak Nota Otomatis
+  const handlePrint = (order) => {
+    setActivePrintOrder(order);
+    setTimeout(() => {
+      window.print();
+    }, 150); 
+  };
+
   const filteredTracks = useMemo(() => {
     return tracks.filter(t => 
-      t.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.user.toLowerCase().includes(searchQuery.toLowerCase())
+      (!showUnpaidOnly || !t.isPaid) &&
+      (t.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t.user.toLowerCase().includes(searchQuery.toLowerCase()))
     );
-  }, [searchQuery, tracks]);
+  }, [searchQuery, tracks, showUnpaidOnly]);
 
   const getTheme = (step) => {
     switch(step) {
@@ -139,7 +160,27 @@ export default function Tracking() {
   };
 
   return (
-    <div className="p-6 md:p-8 bg-[#F8FAFC] min-h-screen text-slate-900 font-sans">
+    <div className="p-6 md:p-8 bg-[#F8FAFC] min-h-screen text-slate-900 font-sans relative">
+      
+      {/* STYLE CSS KHUSUS PRINT (MENYEMBUNYIKAN HALAMAN UTAMA SAAT CETAK STRUK) */}
+      <style>{`
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          #print-invoice-area, #print-invoice-area * {
+            visibility: visible;
+          }
+          #print-invoice-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+          }
+        }
+      `}</style>
+
+      {/* DASHBOARD UTAMA AREA */}
       <div className="max-w-5xl mx-auto space-y-6">
         
         {/* HEADER */}
@@ -150,14 +191,26 @@ export default function Tracking() {
               Memantau <span className="font-bold text-blue-600">{tracks.length} Pesanan Aktif</span> di workshop laundry.
             </p>
           </div>
-          <div className="relative">
-            <HiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg" />
-            <input
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Cari nama atau nomor nota..."
-              className="pl-11 pr-4 py-3 rounded-2xl border border-slate-200 focus:ring-4 focus:ring-blue-100 shadow-sm outline-none w-full md:w-80 transition-all bg-white text-sm"
-            />
+          <div className="w-full md:w-auto">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
+              <Tooltip content="Cari pesanan berdasarkan ID atau nama pelanggan">
+                <div className="relative w-full md:w-80">
+                  <HiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg" />
+                  <input
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Cari nama atau nomor nota..."
+                    className="pl-11 pr-4 py-3 rounded-2xl border border-slate-200 focus:ring-4 focus:ring-blue-100 shadow-sm outline-none w-full transition-all bg-white text-sm"
+                  />
+                </div>
+              </Tooltip>
+              <Switch
+                checked={showUnpaidOnly}
+                onCheckedChange={setShowUnpaidOnly}
+                label="Tampilkan belum bayar"
+              />
+            </div>
+            <Separator className="mt-5" />
           </div>
         </div>
 
@@ -178,7 +231,7 @@ export default function Tracking() {
                     <div className="flex items-center gap-5">
                       <div className={`w-14 h-14 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-center justify-center text-2xl ${theme.icon}`}>
                         {t.currentStep === 0 && <MdLayers />}
-                        {t.currentStep === 1 && <MdLocalLaundryService className="animate-spin-[spin_4s_linear_infinite]" />}
+                        {t.currentStep === 1 && <MdLocalLaundryService className="animate-spin" style={{ animationDuration: '4s' }} />}
                         {t.currentStep === 2 && <MdIron />}
                         {t.currentStep === 3 && <HiCheckCircle />}
                       </div>
@@ -228,7 +281,6 @@ export default function Tracking() {
                   {/* BOTTOM SECTION: CATATAN & ACTIONS */}
                   <div className="flex flex-col lg:flex-row gap-4 items-stretch lg:items-center justify-between border-t border-slate-200/60 pt-5 mt-4">
                     
-                    {/* Catatan Khusus */}
                     <div className="bg-white/90 p-3 px-4 rounded-xl border border-slate-200/80 flex justify-between items-center flex-1 max-w-2xl">
                       <p className="text-xs font-semibold italic text-slate-600">"{t.detail}"</p>
                       <div className="flex items-center gap-1.5 text-slate-400 ml-4 shrink-0">
@@ -239,15 +291,16 @@ export default function Tracking() {
                       </div>
                     </div>
 
-                    {/* Tombol Aksi Cepat Admin */}
                     <div className="flex items-center gap-2 shrink-0 justify-end">
+                      {/* BUTTON CETAK SEKARANG */}
                       <button 
-                        onClick={() => alert(`Mencetak struk/tag untuk ${t.id}`)}
+                        onClick={() => handlePrint(t)}
                         title="Cetak Nota"
-                        className="p-2.5 rounded-xl border border-slate-300 bg-white text-slate-600 hover:bg-slate-50 active:scale-95 transition-all text-sm"
+                        className="p-2.5 rounded-xl border border-slate-300 bg-white text-slate-600 hover:bg-slate-50 active:scale-95 transition-all text-sm cursor-pointer"
                       >
                         <HiPrinter size={18} />
                       </button>
+                      
                       <button 
                         onClick={() => window.open(`https://wa.me/?text=Halo%20${t.user},%20laundry%20kamu%20dengan%20nomor%20nota%20${t.id}%20saat%20ini%20berada%20di%20status:%20*${t.status}*.`)}
                         className="flex items-center gap-1.5 p-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs active:scale-95 transition-all"
@@ -275,6 +328,53 @@ export default function Tracking() {
           )}
         </div>
       </div>
+
+      {/* COMPONENT STRUK THERMAL KASIR (Hanya Muncul Pas Proses Cetak Aktif) */}
+      {activePrintOrder && (
+        <div id="print-invoice-area" className="hidden print:block bg-white text-black p-4 font-mono text-xs max-w-[80mm] mx-auto">
+          <div className="text-center space-y-1 border-b border-dashed border-black pb-3 mb-3">
+            <h2 className="text-sm font-bold tracking-widest">NETTO LAUNDRY</h2>
+            <p className="text-[10px]">Jl. Sudirman No. 123, Pekanbaru</p>
+            <p className="text-[10px]">Telp/WA: 0812-3456-7890</p>
+          </div>
+          
+          <div className="space-y-1 border-b border-dashed border-black pb-3 mb-3">
+            <div className="flex justify-between"><span>Nota ID:</span><span className="font-bold">{activePrintOrder.id}</span></div>
+            <div className="flex justify-between"><span>Pelanggan:</span><span>{activePrintOrder.user}</span></div>
+            <div className="flex justify-between"><span>Tanggal:</span><span>{new Date().toLocaleDateString('id-ID')}</span></div>
+            <div className="flex justify-between"><span>Status:</span><span className="uppercase font-bold">{activePrintOrder.status}</span></div>
+          </div>
+
+          <div className="border-b border-dashed border-black pb-3 mb-3">
+            <p className="font-bold mb-1">Rincian Layanan:</p>
+            <div className="flex justify-between items-start">
+              <div>
+                <p>{activePrintOrder.service}</p>
+                <p className="text-[10px] text-gray-600">Berat: {activePrintOrder.weight}</p>
+              </div>
+              <span>Rp {activePrintOrder.price?.toLocaleString('id-ID')}</span>
+            </div>
+          </div>
+
+          <div className="space-y-1 mb-4">
+            <div className="flex justify-between font-bold text-sm">
+              <span>TOTAL TOTAL:</span>
+              <span>Rp {activePrintOrder.price?.toLocaleString('id-ID')}</span>
+            </div>
+            <div className="flex justify-between text-[10px]">
+              <span>Metode Bayar:</span>
+              <span className="font-bold">{activePrintOrder.isPaid ? "TUNAI (LUNAS)" : "BELUM LUNAS"}</span>
+            </div>
+          </div>
+
+          <div className="text-center pt-2 border-t border-dashed border-black text-[9px] space-y-1">
+            <p className="font-bold">Terima Kasih Atas Kepercayaan Anda</p>
+            <p>Pakaian Bersih, Wangi & Higienis</p>
+            <p className="italic">"{activePrintOrder.detail}"</p>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
