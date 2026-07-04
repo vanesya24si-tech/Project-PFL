@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Barlow';
+    src: url('/fonts/Barlow-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fonts/Poppins-ExtraBold.ttf');
+}
+
+@theme {
+    --font-barlow: 'Barlow', sans-serif;
+    --font-poppins: 'Poppins', sans-serif;
+    --color-latar: #F8FCFE;
+    --color-latar-bg: #F0F9FF;
+    --color-teks: #1E293B;
+    --color-teks-samping: #64748B;
+    --color-garis: #B3E5FC;
+    --color-hijau: #0EA5E9;
+    --color-merah: #EF4444;
+    --color-biru: #0EA5E9;
+    --color-biru-tua: #0369A1;
+    --color-biru-sedang: #0891B2;
+    --color-cyan: #06B6D4;
+    --color-kuning: #0284C7;
+}
+
+body {
+    font-family: 'Barlow', sans-serif;
+    background-image: linear-gradient(to bottom right, #F8FCFE, #F0F9FF);
+}
+
+/* Laundry Premium Components */
+.laundry-btn {
+    background-image: linear-gradient(to right, #0EA5E9, #06B6D4);
+    @apply text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition-all duration-300 transform;
+}
+.laundry-btn:hover {
+    background-image: linear-gradient(to right, #06B6D4, #0369A1);
+    box-shadow: 0 25px 50px rgba(2, 132, 199, 0.25);
+    transform: translateY(-0.25rem);
+}
+
+.laundry-btn-secondary {
+    background-color: white;
+    border: 2px solid var(--color-garis);
+    color: var(--color-teks);
+    @apply font-semibold py-3 px-6 rounded-lg transition-all duration-300;
+}
+
+.laundry-card {
+    background-color: white;
+    border: 1px solid var(--color-garis);
+    @apply rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
+}
+
+.laundry-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--color-garis);
+    border-radius: 0.75rem;
+    color: var(--color-teks);
+    outline: none;
+    transition: all 0.2s ease;
+}
+.laundry-input::placeholder {
+    color: #64748B;
+}
+.laundry-input:focus {
+    border-color: var(--color-hijau);
+    box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
+}
+
+.laundry-label {
+    color: var(--color-teks);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.laundry-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: #F0F9FF;
+    color: var(--color-teks);
+    border: 1px solid var(--color-garis);
+}
+
+.laundry-badge-success {
+    background-color: #B3E5FC;
+    color: var(--color-teks);
+    border: 1px solid var(--color-hijau);
+}
+
+.laundry-header {
+    background-image: linear-gradient(to right, #0EA5E9, #06B6D4);
+    @apply text-white py-6 rounded-b-2xl shadow-md;
+}
