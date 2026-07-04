@@ -395,7 +395,7 @@ export default function LandingPage() {
       {/* ═══════════════════════════════════════
           MARQUEE RIBBON (Pita)
       ═══════════════════════════════════════ */}
-      <div style={{ background: "#2563eb", overflow: "hidden", padding: "12px 0", transform: "rotate(-1.5deg) scaleX(1.1)", margin: "8px 0", boxShadow: "0 10px 40px rgba(37,99,235,0.3)", position: "relative", zIndex: 20 }}>
+      <div style={{ background: "#2563eb", overflow: "hidden", padding: "12px 0", transform: "rotate(-1.5deg)", margin: "8px 0", boxShadow: "0 10px 40px rgba(37,99,235,0.3)", position: "relative", zIndex: 20 }}>
         <div className="do-marquee" style={{ gap: 0, alignItems: "center" }}>
           {[...Array(6)].map((_, i) => (
             <div key={i} style={{ display: "inline-flex", alignItems: "center", gap: "1.5rem", paddingRight: "1.5rem", whiteSpace: "nowrap" }}>

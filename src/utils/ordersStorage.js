@@ -28,7 +28,9 @@ function generateOrderId() {
 
 // Bikin URL publik untuk QR / barcode. Dipakai di AddOrder.jsx.
 export function buildTrackingUrl(orderId) {
-  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  // Gunakan VITE_APP_URL dari env, fallback ke window.location.origin saat dev
+  const appUrl = import.meta.env.VITE_APP_URL;
+  const origin = appUrl || (typeof window !== "undefined" ? window.location.origin : "");
   return `${origin}/track/${orderId}`;
 }
 

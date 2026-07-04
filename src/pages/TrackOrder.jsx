@@ -107,7 +107,12 @@ export default function TrackOrder() {
             {order.currentStep === 2 && <MdIron />}
             {order.currentStep === 3 && <HiCheckCircle />}
           </div>
-          <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight text-center">{order.user}</h2>
+          <div className="text-center">
+            <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">{order.user}</h2>
+            {order.phone && (
+              <p className="text-xs font-bold text-slate-400 mt-1">📱 {order.phone}</p>
+            )}
+          </div>
           <p className={`text-xl font-black ${themeStyles.icon}`}>{order.status}</p>
         </div>
 
@@ -132,6 +137,16 @@ export default function TrackOrder() {
         </div>
 
         <div className="bg-white/90 p-4 rounded-2xl border border-slate-200/80 space-y-2 mb-6">
+          <div className="flex justify-between text-sm font-bold">
+            <span className="text-slate-400">Nomor Nota</span>
+            <span className="text-slate-800">{order.id}</span>
+          </div>
+          {order.phone && (
+            <div className="flex justify-between text-sm font-bold">
+              <span className="text-slate-400">Kontak Pelanggan</span>
+              <span className="text-slate-800">{order.phone}</span>
+            </div>
+          )}
           <div className="flex justify-between text-sm font-bold">
             <span className="text-slate-400">Layanan</span>
             <span className="text-slate-800">{order.service} • {order.weight}</span>
