@@ -265,9 +265,14 @@ export default function LandingPage() {
                 Ke Dasbor <HiArrowRight size={14} />
               </Link>
             ) : (
-              <Link to="/login" className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 text-xs font-black uppercase tracking-wider text-white hover:bg-slate-800 transition-all active:scale-[0.98]">
-                Login Admin
-              </Link>
+              <>
+                <Link to="/cek-order" className="hidden md:inline-flex items-center gap-2 rounded-2xl border border-blue-600 bg-white px-5 py-2.5 text-xs font-black uppercase tracking-wider text-blue-600 hover:bg-blue-50 transition-all active:scale-[0.98]">
+                  🔍 Cek Order
+                </Link>
+                <Link to="/login" className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-5 py-2.5 text-xs font-black uppercase tracking-wider text-white hover:bg-slate-800 transition-all active:scale-[0.98]">
+                  Login Admin
+                </Link>
+              </>
             )}
             <button onClick={() => setIsMenuOpen(true)} className="w-10 h-10 rounded-xl border border-slate-200 bg-white flex items-center justify-center hover:bg-slate-50 transition-colors md:hidden">
               <HiMenu size={18} className="text-slate-700" />

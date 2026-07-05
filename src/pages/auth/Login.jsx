@@ -189,14 +189,14 @@ export default function Login() {
             </button>
           </form>
 
-          {/* REGISTER FOOTER */}
+          {/* CUSTOMER FOOTER */}
           <div className="mt-6 border-t border-slate-100 pt-4 text-center text-sm font-bold text-slate-400">
-            Belum punya akun?{" "}
+            Pelanggan yang ingin cek cucian?{" "}
             <Link 
-              to="/register" 
+              to="/cek-order" 
               className="text-blue-600 font-black hover:text-blue-700 hover:underline transition-colors"
             >
-              Daftar sekarang
+              Cek Order di sini
             </Link>
           </div>
 

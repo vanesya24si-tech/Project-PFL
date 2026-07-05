@@ -52,6 +52,7 @@ const UserComplaint = lazy(() => import("./pages/user/UserComplaint"));
 
 /* ─── PUBLIC ─── */
 const TrackOrder = lazy(() => import("./pages/TrackOrder"));
+const CekOrder = lazy(() => import("./pages/CekOrder"));
 const Login = lazy(() => import("./pages/auth/Login"));
 const Register = lazy(() => import("./pages/auth/Register"));
 const Forgot = lazy(() => import("./pages/auth/Forgot"));
@@ -103,6 +104,9 @@ function App() {
 
           {/* ─── PUBLIC LIVE TRACKING (scan QR/barcode, tanpa login) ─── */}
           <Route path="/track/:orderId" element={<TrackOrder />} />
+
+          {/* ─── CEK ORDER PUBLIK (pelanggan, tanpa registrasi) ─── */}
+          <Route path="/cek-order" element={<CekOrder />} />
 
           {/* ─── AUTH ─── */}
           <Route path="/login"    element={<PublicRoute><Login /></PublicRoute>} />
