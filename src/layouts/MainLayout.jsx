@@ -31,11 +31,10 @@ export default function MainLayout() {
           onLogout={handleLogout} 
         />
         
-        {/* Area scrollable untuk halaman-halaman */}
         <main style={{ 
           flex: 1, 
           overflowY: "auto", 
-          padding: "20px 40px",
+          padding: "16px 24px",
           scrollBehavior: "smooth",
           background: "linear-gradient(135deg, #F8FCFE 0%, #F0F9FF 100%)"
         }}>

@@ -126,7 +126,7 @@ export default function Products() {
             <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-1.5 text-sm font-bold uppercase tracking-wider text-blue-600 mb-3">
               <HiTag className="text-lg" /> Inventaris Layanan
             </div>
-            <h1 className="text-4xl font-black tracking-tight text-slate-900">Katalog Produk <span className="text-blue-600">& Jasa</span></h1>
+            <h1 className="text-2xl font-black tracking-tight text-slate-900">Katalog Produk <span className="text-blue-600">& Jasa</span></h1>
             <p className="text-slate-500 text-base mt-2">
               Kelola harga, stok, dan data layanan laundry Anda langsung dari halaman ini.
             </p>

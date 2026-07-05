@@ -101,14 +101,14 @@ export default function Segmentation() {
   const chartData = useMemo(() => segments.map(s => ({ name: s.name, value: s.count })), [segments]);
 
   return (
-    <div className="w-full min-h-screen bg-transparent p-1 md:p-6 text-[#0F172A] antialiased font-sans">
+    <div className="w-full min-h-screen bg-transparent  text-[#0F172A] antialiased font-sans">
       <div className="max-w-7xl mx-auto space-y-6">
         
         {/* HEADER SECTION */}
         <div className="relative overflow-hidden rounded-[2rem] bg-white p-6 shadow-xl shadow-blue-900/5 border border-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="absolute -right-10 -top-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl"></div>
           <div className="space-y-1">
-            <h1 className="text-4xl font-black tracking-tight text-slate-800 italic uppercase flex items-center gap-3">
+            <h1 className="text-2xl font-black tracking-tight text-slate-800 italic uppercase flex items-center gap-3">
               <HiChartPie className="text-blue-600 not-italic animate-spin-slow" size={32} /> 
               CUSTOMER <span className="text-blue-600 font-black not-italic">SEGMENTATION</span>
             </h1>

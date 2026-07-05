@@ -89,7 +89,7 @@ export default function CekOrder() {
             <div>
               <h1 className="text-2xl font-black text-slate-800">Cek Status Cucian</h1>
               <p className="text-sm text-slate-500 font-medium mt-1">
-                Masukkan No. Order dan No. HP untuk melihat status laundry Anda.
+                Masukkan No. Order untuk melihat status laundry Anda.
               </p>
             </div>
           </div>

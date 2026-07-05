@@ -103,7 +103,7 @@ export default function Loyalty() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#FDFDFF] p-4 md:p-8 text-[#0F172A] font-sans">
+    <div className="w-full min-h-screen bg-[#FDFDFF]  text-[#0F172A] font-sans">
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* HEADER */}

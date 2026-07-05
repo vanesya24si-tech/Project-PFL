@@ -108,13 +108,13 @@ export default function Orders() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-transparent p-1 md:p-6 text-[#0F172A] antialiased font-sans">
+    <div className="w-full min-h-screen bg-transparent  text-[#0F172A] antialiased font-sans">
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* HEADER SECTION */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
           <div className="space-y-0.5">
-            <h1 className="text-4xl font-black tracking-tight text-slate-800 italic uppercase">
+            <h1 className="text-2xl font-black tracking-tight text-slate-800 italic uppercase">
               LAUNDRY <span className="text-blue-600 font-black not-italic">ORDERS</span>
             </h1>
             <p className="text-sm font-bold text-slate-400">

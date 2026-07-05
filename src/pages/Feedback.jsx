@@ -148,7 +148,7 @@ export default function Feedback() {
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full text-sm font-black uppercase tracking-widest text-blue-600">
               <HiLightningBolt /> Kepuasan Pengguna
             </div>
-            <h1 className="text-4xl font-black tracking-tight text-slate-900 leading-tight">
+            <h1 className="text-2xl font-black tracking-tight text-slate-900 leading-tight">
               Feedback <span className="text-blue-600">&amp; Review</span>
             </h1>
             <p className="text-base font-bold text-slate-400 max-w-xl">

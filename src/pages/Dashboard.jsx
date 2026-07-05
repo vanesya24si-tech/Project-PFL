@@ -47,22 +47,22 @@ const notificationTemplates = [
 
 function KpiCard({ icon: Icon, value, label, delta }) {
   return (
-    <div className="bg-white rounded-3xl border border-blue-50/50 p-6 shadow-xs hover:shadow-md transition-all">
+    <div className="bg-white rounded-2xl border border-blue-50/50 p-4 shadow-xs hover:shadow-md transition-all">
       <div className="flex items-start justify-between">
-        <div className="space-y-1">
-          <p className="text-[11px] font-black text-slate-400 uppercase tracking-wider">{label}</p>
-          <p className="text-3xl font-black text-slate-800 tracking-tight">{value}</p>
+        <div className="space-y-0.5">
+          <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">{label}</p>
+          <p className="text-2xl font-black text-slate-800 tracking-tight">{value}</p>
         </div>
-        <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 shadow-xs border border-blue-100/20">
-          <Icon size={22} />
+        <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 shadow-xs border border-blue-100/20">
+          <Icon size={18} />
         </div>
       </div>
       {delta !== undefined && (
-        <div className="mt-4 flex items-center gap-1.5">
-          <span className={`text-[10px] font-black px-2 py-0.5 rounded-md ${delta >= 0 ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "bg-rose-50 text-rose-600 border border-rose-100"}`}>
+        <div className="mt-2 flex items-center gap-1.5">
+          <span className={`text-[9px] font-black px-1.5 py-0.5 rounded-md ${delta >= 0 ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "bg-rose-50 text-rose-600 border border-rose-100"}`}>
             {delta >= 0 ? "+" : ""}{delta}%
           </span>
-          <span className="text-[11px] font-medium text-slate-400">vs minggu lalu</span>
+          <span className="text-[10px] font-medium text-slate-400">vs minggu lalu</span>
         </div>
       )}
     </div>
@@ -174,37 +174,37 @@ export default function NettoLaundryDashboard() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-transparent p-1 md:p-6 text-[#0F172A] antialiased font-sans">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="w-full min-h-screen bg-transparent text-[#0F172A] antialiased font-sans">
+      <div className="max-w-7xl mx-auto space-y-5">
         
         {/* Top Header Action */}
-        <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-6">
+        <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-4">
           <div className="space-y-0.5">
-            <h1 className="text-4xl font-black tracking-tight text-slate-800 italic">
+            <h1 className="text-2xl font-black tracking-tight text-slate-800 italic">
               LIVE <span className="text-blue-600 font-black not-italic">ANALYTICS</span>
             </h1>
-            <p className="text-sm font-bold text-slate-400">
+            <p className="text-xs font-bold text-slate-400">
               Pantau dinamika operasional, performa omzet keuangan, dan grafik CRM secara real-time.
             </p>
           </div>
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             <button 
               onClick={() => navigate("/orders/add")} 
-              className="inline-flex items-center gap-2 rounded-2xl border border-blue-100 bg-white px-4 py-2.5 text-sm font-black text-slate-700 shadow-xs hover:bg-blue-50/50 hover:text-blue-600 transition-all cursor-pointer active:scale-95"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-blue-100 bg-white px-3 py-2 text-xs font-black text-slate-700 shadow-xs hover:bg-blue-50/50 hover:text-blue-600 transition-all cursor-pointer active:scale-95"
             >
-              <MdShoppingCart size={16} className="text-blue-500" /> TAMBAH TRANSAKSI
+              <MdShoppingCart size={14} className="text-blue-500" /> TAMBAH TRANSAKSI
             </button>
             <button 
               onClick={() => navigate("/members/add")} 
-              className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-2.5 text-sm font-black text-white shadow-md shadow-blue-100 hover:bg-blue-700 transition-all cursor-pointer active:scale-95"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3 py-2 text-xs font-black text-white shadow-md shadow-blue-100 hover:bg-blue-700 transition-all cursor-pointer active:scale-95"
             >
-              <MdAdd size={16} /> TAMBAH PELANGGAN
+              <MdAdd size={14} /> TAMBAH PELANGGAN
             </button>
           </div>
         </header>
 
         {/* High-Level KPI Widgets */}
-        <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <KpiCard icon={MdPeople} value={loading ? "..." : customers.length} label="Total Pelanggan" delta={12} />
           <KpiCard icon={MdLocalLaundryService} value={loading ? "..." : orders.length} label="Total Order" delta={8} />
           <KpiCard icon={MdAttachMoney} value={loading ? "..." : omzetLabel} label="Total Omzet" delta={14} />
@@ -212,9 +212,9 @@ export default function NettoLaundryDashboard() {
         </section>
 
         {/* Analytics Layer */}
-        <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <section className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           {/* Revenue Area Chart */}
-          <div className="lg:col-span-2 bg-white border border-slate-100 rounded-[2rem] p-6 shadow-xs">
+          <div className="lg:col-span-2 bg-white border border-slate-100 rounded-2xl p-4 shadow-xs">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider">Proyeksi Arus Kas & Pendapatan</h3>
@@ -242,8 +242,8 @@ export default function NettoLaundryDashboard() {
           </div>
 
           {/* Load Capacity Mixed Chart */}
-          <div className="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-xs">
-            <div className="flex items-center justify-between mb-6">
+          <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-xs">
+            <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider">Metrik Tonase Laundry</h3>
                 <p className="text-sm text-slate-400 mt-0.5">Perbandingan rasio berat total cucian masuk (Kg).</p>
@@ -271,11 +271,11 @@ export default function NettoLaundryDashboard() {
         <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           
           {/* Main List Workspace */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4">
             
             {/* Customer Directory */}
-            <div className="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-xs">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-50 pb-4 mb-4">
+            <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-xs">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-slate-50 pb-3 mb-3">
                 <div>
                   <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider">Database Konsumen</h3>
                   <p className="text-sm text-slate-400 mt-0.5">Manajemen modifikasi profil dan status pelanggan.</p>

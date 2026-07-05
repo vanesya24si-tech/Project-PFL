@@ -144,7 +144,7 @@ export default function Member() {
                   </div>
                   <span className="text-sm font-black text-slate-400 uppercase tracking-widest">{segment.name}</span>
                 </div>
-                <p className="mt-4 text-4xl font-black text-slate-900">{segment.count}</p>
+                <p className="mt-2 text-2xl font-black text-slate-900">{segment.count}</p>
                 <p className="mt-1 text-sm font-medium text-slate-400">Total Database</p>
               </div>
             ))}

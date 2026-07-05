@@ -121,7 +121,7 @@ export default function Tracking() {
         {/* HEADER */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-4xl font-black tracking-tighter italic text-slate-800">LIVE TRACKING</h1>
+            <h1 className="text-2xl font-black tracking-tight italic text-slate-800">LIVE TRACKING</h1>
             <p className="text-slate-500 font-medium text-base">
               Memantau <span className="font-bold text-blue-600">{tracks.length} Pesanan Aktif</span> di workshop laundry.
             </p>

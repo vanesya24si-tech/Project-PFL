@@ -97,7 +97,7 @@ export default function AdminProfile() {
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#F8FAFC] p-4 md:p-10 text-[#0F172A] font-sans">
+    <div className="w-full min-h-screen bg-[#F8FAFC]  text-[#0F172A] font-sans">
       <div className="max-w-4xl mx-auto space-y-8">
 
         {/* TOP COVER & PROFILE HEADER */}
@@ -114,7 +114,7 @@ export default function AdminProfile() {
             </div>
             <div className="pb-2 space-y-1">
               <div className="flex items-center gap-2">
-                <h1 className="text-4xl font-black tracking-tight">{adminData.name}</h1>
+                <h1 className="text-2xl font-black tracking-tight">{adminData.name}</h1>
                 <MdVerifiedUser className="text-blue-500" size={24} />
               </div>
               <p className="text-sm font-black text-slate-400 uppercase tracking-[0.2em]">{adminData.role} • {adminData.store}</p>

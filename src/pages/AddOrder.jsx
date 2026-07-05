@@ -251,7 +251,7 @@ export default function AddOrderForm() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-transparent p-1 md:p-6 text-[#0F172A] antialiased font-sans">
+    <div className="w-full min-h-screen bg-transparent  text-[#0F172A] antialiased font-sans">
       <div className="max-w-3xl mx-auto space-y-6">
         
         {/* NAVIGASI KEMBALI */}
@@ -265,7 +265,7 @@ export default function AddOrderForm() {
 
         {/* HEADER FORM */}
         <div className="border-b border-slate-100 pb-4">
-          <h1 className="text-4xl font-black tracking-tight text-slate-800 italic uppercase">
+          <h1 className="text-2xl font-black tracking-tight text-slate-800 italic uppercase">
             INPUT <span className="text-blue-600 font-black not-italic">NEW ORDER</span>
           </h1>
           <p className="text-sm font-bold text-slate-400 mt-0.5">

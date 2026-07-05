@@ -44,18 +44,18 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between px-6 h-[76px] bg-white border-b border-slate-100 shadow-sm font-sans text-[#0F172A] antialiased">
+    <header className="sticky top-0 z-50 flex items-center justify-between px-4 h-[56px] bg-white border-b border-slate-100 shadow-sm font-sans text-[#0F172A] antialiased">
       
       {/* BRAND / LOGO */}
-      <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate("/dashboard")}>
-        <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-blue-200 transition-transform group-hover:scale-105">
+      <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigate("/dashboard")}>
+        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black text-lg shadow-lg shadow-blue-200 transition-transform group-hover:scale-105">
           N
         </div>
         <div className="hidden sm:block">
-          <h1 className="text-2xl font-black text-slate-800 leading-tight italic">
+          <h1 className="text-lg font-black text-slate-800 leading-tight italic">
             Netto<span className="text-blue-600 font-black not-italic">Laundry</span>
           </h1>
-          <p className="text-[10px] uppercase tracking-widest text-slate-400 font-black">
+          <p className="text-[8px] uppercase tracking-widest text-slate-400 font-black">
             Admin Portal
           </p>
         </div>
@@ -63,14 +63,14 @@ export default function Header() {
 
       {/* SEARCH BAR (Proaktif mencari pesanan) */}
       <form 
-        className="relative w-full max-w-md hidden md:block mx-8"
+        className="relative w-full max-w-sm hidden md:block mx-4"
         onSubmit={(e) => e.preventDefault()}
       >
-        <HiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl" />
+        <HiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base" />
         <input
           type="search"
           placeholder="Cari pesanan, pelanggan, atau invoice..."
-          className="w-full h-11 pl-11 pr-4 rounded-2xl border border-slate-100 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400"
+          className="w-full h-9 pl-9 pr-4 rounded-xl border border-slate-100 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 transition-all text-xs font-bold text-slate-800 placeholder:text-slate-400"
         />
       </form>
 

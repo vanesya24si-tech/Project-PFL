@@ -28,13 +28,13 @@ export default function Settings() {
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#FDFDFF] p-4 md:p-10 text-[#0F172A] font-sans">
+    <div className="w-full min-h-screen bg-[#FDFDFF]  text-[#0F172A] font-sans">
       <div className="max-w-5xl mx-auto">
         
         {/* HEADER */}
         <div className="mb-10 flex justify-between items-end">
           <div>
-            <h1 className="text-4xl font-black italic tracking-tighter uppercase">
+            <h1 className="text-2xl font-black italic tracking-tight uppercase">
               System <span className="text-blue-600 not-italic">Settings</span>
             </h1>
             <p className="text-slate-400 font-bold text-sm mt-1 uppercase tracking-widest">Konfigurasi operasional Netto Laundry</p>

@@ -123,7 +123,7 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="w-full min-h-screen bg-transparent p-1 md:p-6 text-[#0F172A] antialiased font-sans">
+    <div className="w-full min-h-screen bg-transparent  text-[#0F172A] antialiased font-sans">
       <div className="max-w-5xl mx-auto space-y-6">
         <Link
           to="/products"
