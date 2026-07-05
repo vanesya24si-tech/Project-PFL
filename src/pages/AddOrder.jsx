@@ -6,7 +6,7 @@ import {
 } from "react-icons/hi";
 
 // Mengambil database customer terpusat (Sesuai mockup daftar pelanggan Anda)
-import { loadCustomers, updateCustomer } from "../utils/customerStorage";
+import { loadCustomers, updateCustomer, saveCustomer, buildCustomerData } from "../utils/customerStorage";
 import { loadProducts } from "../utils/productStorage";
 // Order tersimpan ke Supabase supaya QR/barcode tracking-nya nyambung ke data asli & realtime
 import { createOrder, buildTrackingUrl } from "../utils/ordersStorage";
@@ -215,7 +215,7 @@ export default function AddOrderForm() {
     // Jika pelanggan existing → update poin & total transaksi di Supabase
     if (isExistingCustomer && crmData.id) {
       try {
-        const pointsEarned = Math.floor(totalPrice / 1000); // 1 poin per Rp 1.000
+        const pointsEarned = Math.floor(totalPrice / 1000);
         await updateCustomer(crmData.id, {
           points: (crmData.points || 0) + pointsEarned,
           totalTransactions: (crmData.totalTransactions || 0) + 1,
@@ -224,6 +224,25 @@ export default function AddOrderForm() {
         });
       } catch (updateErr) {
         console.warn("Poin tidak berhasil diupdate:", updateErr);
+      }
+    } else if (crmData.customerName && crmData.phone) {
+      // Pelanggan baru (non-member) → otomatis buatkan profil CRM
+      try {
+        const pointsEarned = Math.floor(totalPrice / 1000);
+        const newCustomerData = buildCustomerData({
+          name: crmData.customerName,
+          phone: crmData.phone,
+          email: crmData.email || "",
+          address: crmData.address || "",
+          customerType: "Regular",
+        });
+        newCustomerData.points = pointsEarned;
+        newCustomerData.totalTransactions = 1;
+        newCustomerData.totalSpent = totalPrice;
+        newCustomerData.lastTransaction = new Date().toISOString().split('T')[0];
+        await saveCustomer(newCustomerData, false);
+      } catch (autoErr) {
+        console.warn("Auto-create customer gagal (tidak fatal):", autoErr);
       }
     }
 

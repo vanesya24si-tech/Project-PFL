@@ -27,6 +27,7 @@ export default function UserDashboard() {
   const navigate = useNavigate();
   const [customer, setCustomer] = useState(null);
   const [activeOrder, setActiveOrder] = useState(null);
+  const [stats, setStats] = useState({ totalOrders: 0, totalSpent: 0, points: 0 });
   const [loading, setLoading] = useState(true);
 
   const phone = user?.user_metadata?.phone || "";
@@ -57,6 +58,15 @@ export default function UserDashboard() {
             (phone && o.phone?.replace(/\D/g, "") === phone?.replace(/\D/g, "")) ||
             (name && o.user?.toLowerCase() === name?.toLowerCase())
         );
+        // Hitung stats dari orders secara dinamis
+        const totalOrders = myOrders.length;
+        const totalSpent = myOrders.reduce((sum, o) => sum + (Number(o.price) || 0), 0);
+        setStats({
+          totalOrders,
+          totalSpent,
+          points: found?.points || Math.floor(totalSpent / 1000),
+        });
+
         const active_order = myOrders.find((o) => o.currentStep < 3) || myOrders[0] || null;
         setActiveOrder(active_order);
       } catch (err) {
@@ -82,12 +92,12 @@ export default function UserDashboard() {
         <div className="relative z-10">
           <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Total Poin Saya</p>
           <p className="text-3xl font-black mt-1 tracking-tight text-white">
-            {loading ? "..." : (customer?.points ?? 0).toLocaleString("id-ID")}
+            {loading ? "..." : stats.points.toLocaleString("id-ID")}
           </p>
           <div className="inline-flex items-center gap-1.5 mt-3 bg-white/10 px-3 py-1 rounded-full border border-white/10">
             <HiGift size={14} className="text-blue-400" />
             <p className="text-[10px] font-bold text-slate-100 uppercase tracking-widest">
-              {customer?.segment || "Regular"} Member
+              {customer?.segment || "Pelanggan"} Member
             </p>
           </div>
         </div>
@@ -157,22 +167,22 @@ export default function UserDashboard() {
       </div>
 
       {/* STATS */}
-      {customer && (
+      {(customer || stats.totalOrders > 0) && (
         <div className="bg-white rounded-2xl border border-slate-200 p-4 grid grid-cols-3 gap-4 text-center shadow-sm">
           <div>
-            <p className="text-2xl font-black text-slate-800">{customer.totalTransactions || 0}</p>
+            <p className="text-2xl font-black text-slate-800">{stats.totalOrders}</p>
             <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Order</p>
           </div>
           <div className="border-x border-slate-200">
             <p className="text-2xl font-black text-slate-800">
-              {(customer.totalSpent || 0) > 999999
-                ? `${((customer.totalSpent || 0) / 1000000).toFixed(1)}Jt`
-                : `${Math.round((customer.totalSpent || 0) / 1000)}K`}
+              {stats.totalSpent > 999999
+                ? `${(stats.totalSpent / 1000000).toFixed(1)}Jt`
+                : `${Math.round(stats.totalSpent / 1000)}K`}
             </p>
             <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Total Belanja</p>
           </div>
           <div>
-            <p className="text-2xl font-black text-blue-600">{customer.points || 0}</p>
+            <p className="text-2xl font-black text-blue-600">{stats.points}</p>
             <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Poin</p>
           </div>
         </div>

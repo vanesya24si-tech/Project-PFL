@@ -11,6 +11,7 @@ import {
 } from "react-icons/hi";
 import { MdLocalLaundryService } from "react-icons/md";
 import toast from "react-hot-toast";
+import { submitComplaint } from "../../utils/complaintStorage";
 
 const COMPLAINT_TYPES = [
   "Pakaian Rusak / Sobek",
@@ -74,24 +75,13 @@ export default function UserComplaint() {
 
     setSubmitting(true);
     try {
-      // Build complaint payload — store in localStorage for demo
-      // In production, upload photos to Supabase Storage and save record
-      const complaint = {
-        id: `KMP-${Date.now()}`,
+      await submitComplaint({
         name,
         phone,
         type,
         orderId: orderId.trim() || "-",
         description: description.trim(),
-        photoCount: photos.length,
-        status: "Menunggu Ditinjau",
-        createdAt: new Date().toISOString(),
-      };
-
-      const existing = JSON.parse(localStorage.getItem("netto_complaints") || "[]");
-      localStorage.setItem("netto_complaints", JSON.stringify([complaint, ...existing]));
-
-      await new Promise((r) => setTimeout(r, 1200)); // simulate network
+      });
       setSuccess(true);
       toast.success("Komplain berhasil dikirim! Tim kami akan segera meninjau.");
     } catch (err) {
