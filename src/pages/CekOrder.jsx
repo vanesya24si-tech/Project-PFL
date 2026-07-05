@@ -94,6 +94,11 @@ export default function CekOrder() {
             </div>
           </div>
 
+          <div className="rounded-2xl border border-blue-100 bg-blue-50/70 p-3 text-left">
+            <p className="text-[10px] font-black uppercase tracking-widest text-blue-700">Cepat & simpel</p>
+            <p className="text-sm text-slate-600 mt-1">Cukup masukkan nomor order, lalu cek status cucian Anda dalam hitungan detik.</p>
+          </div>
+
           {/* FORM CARD */}
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
 
@@ -127,6 +132,18 @@ export default function CekOrder() {
                 <p className="text-[10px] text-slate-400 font-medium pl-1">
                   No. Order tercetak di struk / barcode yang diberikan kasir.
                 </p>
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {['ORD-1234', 'ORD-5678'].map((example) => (
+                    <button
+                      key={example}
+                      type="button"
+                      onClick={() => setOrderId(example)}
+                      className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-slate-500 hover:border-blue-300 hover:text-blue-600 transition-all"
+                    >
+                      {example}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* SUBMIT */}

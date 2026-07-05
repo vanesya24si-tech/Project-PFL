@@ -19,24 +19,12 @@ import {
   MdStar,
 } from "react-icons/md";
 import { loadCustomers, deleteCustomer } from "../utils/customerStorage";
-import { getAllOrders } from "../utils/ordersStorage";
+import { getAllOrders, STATUS_LABELS } from "../utils/ordersStorage";
 import { loadFeedback } from "../utils/feedbackStorage";
 
-// Data Grafik Bulanan — tetap sebagai baseline visual
-const chartData = [
-  { name: "Jan", weight: 780, revenue: 16000000 },
-  { name: "Feb", weight: 920, revenue: 18500000 },
-  { name: "Mar", weight: 1080, revenue: 21000000 },
-  { name: "Apr", weight: 1250, revenue: 24800000 },
-  { name: "May", weight: 1480, revenue: 29800000 },
-  { name: "Jun", weight: 1750, revenue: 34500000 },
-  { name: "Jul", weight: 1620, revenue: 31000000 },
-  { name: "Aug", weight: 1890, revenue: 37200000 },
-  { name: "Sep", weight: 2100, revenue: 41000000 },
-  { name: "Oct", weight: 2350, revenue: 46800000 },
-  { name: "Nov", weight: 2200, revenue: 43500000 },
-  { name: "Dec", weight: 2800, revenue: 58000000 },
-];
+function formatCurrency(value) {
+  return `Rp ${Number(value || 0).toLocaleString("id-ID")}`;
+}
 
 const notificationTemplates = [
   { label: "Cucian Selesai", message: "Halo {name}, cucian Anda sudah selesai dan dikemas rapi. Silakan ambil di outlet Netto Laundry." },
@@ -150,6 +138,50 @@ export default function NettoLaundryDashboard() {
   }, [totalOmzet]);
 
   const activeOrders = useMemo(() => orders.filter(o => o.currentStep < 3).length, [orders]);
+  const completedOrders = useMemo(() => orders.filter(o => o.currentStep >= 3).length, [orders]);
+  const unpaidOrders = useMemo(() => orders.filter(o => !o.isPaid).length, [orders]);
+  const totalWeight = useMemo(() => orders.reduce((sum, o) => sum + (Number(o.weight) || 0), 0), [orders]);
+
+  const chartData = useMemo(() => {
+    const months = Array.from({ length: 6 }, (_, index) => {
+      const date = new Date();
+      date.setMonth(date.getMonth() - (5 - index));
+      return {
+        key: `${date.getFullYear()}-${date.getMonth() + 1}`,
+        label: date.toLocaleDateString("id-ID", { month: "short" }),
+      };
+    });
+
+    return months.map(({ key, label }) => {
+      const monthOrders = orders.filter((order) => {
+        if (!order.createdAt) return false;
+        const createdAt = new Date(order.createdAt);
+        return `${createdAt.getFullYear()}-${createdAt.getMonth() + 1}` === key;
+      });
+
+      return {
+        name: label,
+        weight: monthOrders.reduce((sum, order) => sum + (Number(order.weight) || 0), 0),
+        revenue: monthOrders.reduce((sum, order) => sum + (Number(order.price) || 0), 0),
+      };
+    });
+  }, [orders]);
+
+  const workloadBreakdown = useMemo(() => {
+    const counts = Array(STATUS_LABELS.length).fill(0);
+    orders.forEach((order) => {
+      const step = Math.min(Math.max(order.currentStep ?? 0, 0), STATUS_LABELS.length - 1);
+      counts[step] += 1;
+    });
+
+    const maxValue = Math.max(...counts, 1);
+    return counts.map((value, index) => ({
+      status: STATUS_LABELS[index],
+      value,
+      max: maxValue + 2,
+      color: index === 0 ? "bg-slate-400" : index === 1 ? "bg-blue-600" : index === 2 ? "bg-amber-500" : "bg-emerald-500",
+    }));
+  }, [orders]);
 
   const averageRating = useMemo(() => {
     if (!feedbackList.length) return "0.0";
@@ -208,7 +240,7 @@ export default function NettoLaundryDashboard() {
           <KpiCard icon={MdPeople} value={loading ? "..." : customers.length} label="Total Pelanggan" delta={12} />
           <KpiCard icon={MdLocalLaundryService} value={loading ? "..." : orders.length} label="Total Order" delta={8} />
           <KpiCard icon={MdAttachMoney} value={loading ? "..." : omzetLabel} label="Total Omzet" delta={14} />
-          <KpiCard icon={MdNotificationsActive} value={loading ? "..." : activeOrders} label="Order Aktif" delta={5} />
+          <KpiCard icon={MdNotificationsActive} value={loading ? "..." : `${activeOrders} / ${completedOrders}`} label="Aktif / Selesai" delta={5} />
         </section>
 
         {/* Analytics Layer */}
@@ -385,24 +417,23 @@ export default function NettoLaundryDashboard() {
             {/* Live Counter Capacity Tracker */}
             <div className="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-xs">
               <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider">Beban Rak Kerja</h3>
-              <p className="text-sm text-slate-400 mt-0.5 mb-4">Jumlah antrean pakaian berdasarkan partisi kerja harian.</p>
+              <p className="text-sm text-slate-400 mt-0.5 mb-4">Jumlah antrean pakaian berdasarkan tahap proses yang sedang berjalan.</p>
               <div className="space-y-4">
-                {[
-                  { status: "Antrean Masuk / Diterima", value: 32, max: 40, color: "bg-slate-400" },
-                  { status: "Siklus Cuci & Pengering", value: 18, max: 20, color: "bg-blue-600" },
-                  { status: "Proses Setrika Uap", value: 9, max: 15, color: "bg-amber-500" },
-                  { status: "Selesai / Siap Diambil", value: 41, max: 50, color: "bg-emerald-500" },
-                ].map((item) => (
+                {workloadBreakdown.map((item) => (
                   <div key={item.status} className="space-y-1.5">
                     <div className="flex justify-between text-sm font-bold">
                       <span className="text-slate-500 font-medium">{item.status}</span>
-                      <span className="text-slate-800">{item.value} <span className="text-slate-300 font-normal">/ {item.max}</span></span>
+                      <span className="text-slate-800">{item.value} <span className="text-slate-300 font-normal">order</span></span>
                     </div>
                     <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden border border-slate-100">
-                      <div className={`h-full ${item.color} transition-all duration-500`} style={{ width: `${(item.value / item.max) * 100}%` }} />
+                      <div className={`h-full ${item.color} transition-all duration-500`} style={{ width: `${Math.max(8, (item.value / item.max) * 100)}%` }} />
                     </div>
                   </div>
                 ))}
+              </div>
+              <div className="mt-4 rounded-2xl border border-blue-100 bg-blue-50/50 p-3 text-sm text-slate-600">
+                <p className="font-black text-slate-800">Ringkasan cepat</p>
+                <p className="mt-1">{activeOrders} order masih aktif, {completedOrders} selesai, dan {unpaidOrders} belum lunas.</p>
               </div>
             </div>
 

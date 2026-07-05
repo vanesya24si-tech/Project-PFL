@@ -94,13 +94,18 @@ export default function TrackOrder() {
   ][order.currentStep] || { bg: "bg-slate-50/60", border: "border-slate-200", accent: "bg-slate-600", icon: "text-slate-600" };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-8 flex items-center justify-center">
-      <div className={`w-full max-w-lg rounded-3xl border-2 ${themeStyles.border} ${themeStyles.bg} p-6 md:p-8 shadow-sm`}>
-        <div className="text-center mb-6">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.12),_transparent_42%),_#F8FAFC] p-3 sm:p-6 md:p-8 flex items-center justify-center">
+      <div className={`w-full max-w-xl rounded-[28px] border-2 ${themeStyles.border} ${themeStyles.bg} p-5 sm:p-7 shadow-sm`}>
+        <div className="text-center mb-5">
           <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">Netto Laundry • Live Tracking</p>
-          <span className="text-[11px] font-black uppercase px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-700">
-            {order.id}
-          </span>
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            <span className="text-[11px] font-black uppercase px-2.5 py-1 rounded-full bg-white border border-slate-200 text-slate-700">
+              {order.id}
+            </span>
+            <span className={`text-[11px] font-black uppercase px-2.5 py-1 rounded-full ${themeStyles.icon} bg-white/80 border border-slate-200`}>
+              {order.isPaid ? "Lunas" : "Belum Bayar"}
+            </span>
+          </div>
         </div>
 
         <div className="flex flex-col items-center gap-3 mb-8">
@@ -119,8 +124,18 @@ export default function TrackOrder() {
           <p className={`text-xl font-black ${themeStyles.icon}`}>{order.status}</p>
         </div>
 
+        <div className="rounded-2xl border border-white/70 bg-white/70 p-3 mb-6">
+          <div className="flex items-center justify-between text-[11px] font-black uppercase tracking-wider text-slate-500">
+            <span>Status Saat Ini</span>
+            <span className={themeStyles.icon}>{order.status}</span>
+          </div>
+          <p className="mt-2 text-sm text-slate-600">
+            {order.eta === "Selesai" ? "Cucian Anda sudah siap diambil." : order.eta ? `Estimasi selesai: ${order.eta}` : "Proses laundry sedang berjalan, update otomatis akan muncul di sini."}
+          </p>
+        </div>
+
         {/* PROGRESS STEPPER — sama persis dengan yang admin lihat, biar konsisten */}
-        <div className="grid grid-cols-4 gap-3 mb-8">
+        <div className="grid grid-cols-4 gap-2 sm:gap-3 mb-8">
           {steps.map((step, idx) => {
             const isDone = order.currentStep >= idx;
             const isCurrent = order.currentStep === idx;
