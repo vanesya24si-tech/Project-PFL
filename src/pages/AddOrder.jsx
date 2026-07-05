@@ -602,17 +602,17 @@ export default function AddOrderForm() {
             )}
 
             {/* QR Code Live Tracking Pelanggan */}
-            <div className="bg-slate-50 border border-slate-200 rounded-[2rem] p-4 space-y-3">
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
               <p className="text-[10px] font-black text-slate-700 uppercase tracking-wider">QR Code Live Tracking Pelanggan</p>
-              <div className="bg-white p-3 rounded-2xl w-32 h-32 mx-auto flex items-center justify-center border border-slate-100">
-                <img src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(trackingUrl)}`} alt="Customer Tracking QR" className="w-26 h-26 object-contain" />
+              <div className="bg-white p-4 rounded-2xl w-44 h-44 mx-auto flex items-center justify-center border border-slate-100">
+                <img src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(trackingUrl)}`} alt="Customer Tracking QR" className="w-36 h-36 object-contain" />
               </div>
               <p className="text-[10px] font-mono text-slate-500 truncate bg-white p-2 border rounded-xl font-bold">{trackingUrl}</p>
             </div>
 
             <div className="grid grid-cols-2 gap-3 pt-2">
-              <button type="button" onClick={() => alert("Cetak struk sukses.")} className="border bg-white text-slate-700 text-sm font-black py-3 rounded-2xl uppercase"><HiPrinter size={16} /> Cetak Struk</button>
-              <button type="button" onClick={() => { setShowInvoiceModal(false); navigate("/orders"); }} className="bg-slate-900 text-white text-sm font-black py-3 rounded-2xl uppercase">Selesai <HiArrowSmRight size={16} /></button>
+              <button type="button" onClick={() => alert("Cetak struk sukses.")} className="border bg-white text-slate-700 text-xs font-black py-2.5 rounded-xl uppercase flex items-center justify-center gap-1.5 cursor-pointer"><HiPrinter size={14} /> Cetak Struk</button>
+              <button type="button" onClick={() => { setShowInvoiceModal(false); navigate("/orders"); }} className="bg-slate-900 text-white text-xs font-black py-2.5 rounded-xl uppercase flex items-center justify-center gap-1.5 cursor-pointer">Selesai <HiArrowSmRight size={14} /></button>
             </div>
           </div>
         </div>

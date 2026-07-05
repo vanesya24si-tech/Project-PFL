@@ -314,9 +314,9 @@ export default function Tracking() {
           <div className="text-center border-b border-dashed border-black pb-3 mb-3">
             <p className="font-bold mb-1">Scan Untuk Live Tracking:</p>
             <img
-              src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(buildTrackingUrl(activePrintOrder.id))}`}
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(buildTrackingUrl(activePrintOrder.id))}`}
               alt="QR Live Tracking"
-              className="w-20 h-20 object-contain mx-auto"
+              className="w-32 h-32 object-contain mx-auto"
             />
           </div>
 
