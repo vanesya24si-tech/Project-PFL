@@ -28,6 +28,7 @@ import {
 import { useAuth } from "../utils/AuthContext";
 import { getOrderById } from "../utils/ordersStorage";
 import { toast } from "react-hot-toast";
+import heroImg from "../assets/hero_image.jpg";
 
 const activityData = [
   { name: "Sen", berat: 120, omzet: 1200000 },
@@ -306,89 +307,85 @@ export default function LandingPage() {
       {/* ═══════════════════════════════════════
           1. HERO PREMIUM
       ═══════════════════════════════════════ */}
-      <section id="hero" className="relative min-h-[90vh] flex items-center justify-center pt-16 pb-20 px-6 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 bg-sky-400/10 rounded-full blur-3xl pointer-events-none" />
+      <section id="hero" className="relative min-h-[95vh] flex items-center justify-center pt-24 pb-20 px-6 overflow-hidden">
+        {/* Dynamic Light Background */}
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-400/10 rounded-full blur-[100px] pointer-events-none animate-pulse z-0" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-400/10 rounded-full blur-[120px] pointer-events-none z-0" />
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-          <div className="lg:col-span-6 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 rounded-full bg-blue-500/10 border border-blue-500/20 px-4 py-2 text-[10px] font-black uppercase tracking-[0.25em] text-blue-600">
-              <HiOutlineSparkles className="animate-pulse" /> Solusi Manajemen Laundry Premium
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="lg:col-span-6 space-y-8 text-left"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 border border-blue-100 px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 shadow-sm">
+              <HiOutlineSparkles className="animate-pulse" /> Era Baru Manajemen Laundry
             </div>
-            <h1 className="text-4xl md:text-6xl font-black tracking-tight text-slate-800 leading-tight uppercase italic">
-              Digitalisasi <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-sky-500 to-blue-500 font-black not-italic">
+            <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-800 leading-[1.1] uppercase italic">
+              Level Up <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-sky-500 to-blue-500 font-black not-italic drop-shadow-sm">
                 Bisnis Laundry
               </span> <br />
-              Dalam Satu Dasbor Terpusat
+              Mu Sekarang
             </h1>
             <p className="text-sm md:text-base font-medium text-slate-500 max-w-xl leading-relaxed">
-              Platform CRM & POS Laundry modern yang mempermudah pelacakan timbangan cucian kasir, status pengerjaan pakaian real-time, manajemen feedback pelanggan, hingga program loyalitas poin otomatis.
+              Tinggalkan cara lama. Beralih ke sistem CRM & POS berteknologi canggih dengan otomasi WhatsApp, pelacakan real-time, dan analitik cerdas.
             </p>
-            <div className="flex flex-wrap gap-4 pt-2">
-              <a href="#features" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-sky-600 px-8 py-4 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all hover:brightness-105 active:scale-[0.98]">
-                Lihat Fitur Sistem
+            <div className="flex flex-wrap gap-4 pt-4">
+              <a href="#features" className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-sky-500 px-8 py-4 text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all hover:-translate-y-1 active:scale-[0.98]">
+                Eksplorasi Fitur
               </a>
-              <a href="#engagement" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white border border-slate-200 px-8 py-4 text-xs font-black uppercase tracking-widest text-slate-700 hover:bg-slate-50 transition-all active:scale-[0.98] shadow-sm">
-                Interaksi & Poll <HiArrowRight size={14} />
+              <a href="#engagement" className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-white border border-slate-200 px-8 py-4 text-xs font-black uppercase tracking-widest text-slate-700 hover:bg-slate-50 transition-all active:scale-[0.98] shadow-sm">
+                Lihat Demo <HiArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Dashboard Preview Card */}
-          <div className="lg:col-span-6">
-            <div className="relative p-1 bg-gradient-to-br from-blue-500/30 via-sky-500/10 to-blue-600/30 rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(2,132,199,0.15)]">
-              <div className="bg-white rounded-[2.4rem] p-6 border border-white/60 space-y-6">
-                <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                  <div className="flex items-center gap-2">
-                    <span className="w-3.5 h-3.5 rounded-full bg-rose-500" />
-                    <span className="w-3.5 h-3.5 rounded-full bg-amber-500" />
-                    <span className="w-3.5 h-3.5 rounded-full bg-emerald-500" />
-                    <span className="text-[10px] text-slate-400 font-bold ml-2">DASBOR KASIR REAL-TIME</span>
-                  </div>
-                  <span className="text-[9px] font-black uppercase tracking-widest bg-blue-100 text-blue-600 px-2 py-0.5 rounded-md border border-blue-200">Live Demo</span>
-                </div>
-                <div className="grid grid-cols-3 gap-4">
-                  {[["Total Pelanggan","1,450+","text-slate-800"],["Antrean Aktif","12 Nota","text-blue-600"],["Selesai Tepat Waktu","98.4%","text-sky-500"]].map(([l,v,c],i) => (
-                    <div key={i} className="bg-slate-50/50 rounded-2xl p-3 border border-slate-100 shadow-inner">
-                      <span className="block text-[9px] font-black uppercase tracking-wider text-slate-400">{l}</span>
-                      <span className={`text-lg font-black ${c}`}>{v}</span>
+          {/* Premium Image Card with Glassmorphism */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
+            className="lg:col-span-6 relative"
+          >
+            <div className="relative p-1 bg-gradient-to-br from-blue-100 via-transparent to-sky-100 rounded-[3rem] shadow-[0_32px_80px_-16px_rgba(14,165,233,0.15)]">
+              <div className="bg-white/60 backdrop-blur-xl rounded-[2.9rem] border border-white p-2 overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/5 to-sky-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                <img 
+                  src={heroImg} 
+                  alt="Premium Laundry Management" 
+                  className="w-full h-auto object-cover rounded-[2.5rem] shadow-lg scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out float-slow"
+                />
+                
+                {/* Floating Glass Badges */}
+                <div className="absolute -left-6 top-1/4 bg-white/90 backdrop-blur-md border border-slate-100 rounded-2xl p-4 shadow-xl float-med hidden md:block">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                      <HiOutlineCheckCircle className="text-emerald-500 text-xl" />
                     </div>
-                  ))}
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Grafik Omzet & Berat Laundry (Mingguan)</span>
-                    <span className="text-[9px] text-blue-600 font-bold flex items-center gap-1"><HiOutlineTrendingUp /> +14.2%</span>
-                  </div>
-                  <div className="h-32 w-full bg-slate-50/40 rounded-2xl border border-slate-100 p-2">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={activityData} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
-                        <defs>
-                          <linearGradient id="colorOmzet" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#2563EB" stopOpacity={0.25}/>
-                            <stop offset="95%" stopColor="#2563EB" stopOpacity={0}/>
-                          </linearGradient>
-                        </defs>
-                        <XAxis dataKey="name" stroke="#94A3B8" fontSize={8} tickLine={false} />
-                        <YAxis stroke="#94A3B8" fontSize={8} tickLine={false} />
-                        <ChartTooltip />
-                        <Area type="monotone" dataKey="berat" stroke="#2563EB" strokeWidth={2} fillOpacity={1} fill="url(#colorOmzet)" />
-                      </AreaChart>
-                    </ResponsiveContainer>
+                    <div>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Status Cuci</p>
+                      <p className="text-xs font-black text-slate-700">Selesai 100%</p>
+                    </div>
                   </div>
                 </div>
-                <div className="bg-blue-50/50 rounded-2xl p-4 border border-blue-100/50 space-y-2">
-                  <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-wider text-blue-600">
-                    <HiOutlineVolumeUp className="text-sm animate-bounce" /> Status Cucian Terakhir:
+                
+                <div className="absolute -right-6 bottom-1/4 bg-white/90 backdrop-blur-md border border-slate-100 rounded-2xl p-4 shadow-xl float-slow hidden md:block" style={{ animationDelay: '1s' }}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center">
+                      <HiOutlineVolumeUp className="text-blue-600 text-xl" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Notifikasi WA</p>
+                      <p className="text-xs font-black text-slate-700">Terkirim</p>
+                    </div>
                   </div>
-                  <p className="text-[11px] font-medium text-slate-600 leading-normal">
-                    Nota #TRX-1025 milik Rian Hidayat (Cuci Kering) telah selesai memasuki tahap Setrika dan siap dipacking.
-                  </p>
                 </div>
+
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -444,11 +441,17 @@ export default function LandingPage() {
               { val: "48K+ Kg", label: "Cucian Diselesaikan", desc: "Nota pengerjaan sukses" },
               { val: "1.450+", label: "Pelanggan Loyal", desc: "Terhubung program poin" }
             ].map((stat, idx) => (
-              <div key={idx} className="bg-white/80 border border-white/60 shadow-sm rounded-3xl p-6 hover:border-blue-500/20 hover:bg-white transition-all group">
-                <p className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-slate-800 to-slate-500 group-hover:from-blue-600 group-hover:to-sky-500 transition-all tracking-tight mb-2">{stat.val}</p>
-                <p className="text-xs font-black uppercase tracking-wider text-slate-700">{stat.label}</p>
-                <p className="text-[10px] text-slate-400 font-medium mt-1">{stat.desc}</p>
-              </div>
+              <motion.div 
+                key={idx} 
+                whileHover={{ scale: 1.05, y: -10 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="bg-white/80 backdrop-blur-lg border border-white/60 shadow-lg rounded-3xl p-6 hover:border-blue-400/50 hover:shadow-2xl hover:shadow-blue-500/20 hover:bg-white transition-colors group cursor-pointer relative overflow-hidden"
+              >
+                <div className="absolute -right-10 -top-10 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-cyan-400/20 transition-all"></div>
+                <p className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-slate-800 to-slate-500 group-hover:from-blue-600 group-hover:to-cyan-500 transition-all tracking-tight mb-2 relative z-10">{stat.val}</p>
+                <p className="text-xs font-black uppercase tracking-wider text-slate-700 relative z-10">{stat.label}</p>
+                <p className="text-[10px] text-slate-400 font-medium mt-1 relative z-10">{stat.desc}</p>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -476,11 +479,15 @@ export default function LandingPage() {
               { num: "03", t: "Status Cucian Tidak Jelas", d: "Pelanggan sering menelepon berulang kali untuk menanyakan status cucian." },
               { num: "04", t: "Poin Loyalitas Tidak Terdata", d: "Pencatatan poin di kertas struk fisik mudah hilang, merusak retensi pelanggan." }
             ].map((p, idx) => (
-              <div key={idx} className="bg-white/60 border border-slate-200/40 rounded-3xl p-5 space-y-2 shadow-sm">
-                <span className="text-xs font-black text-rose-500">{p.num}</span>
-                <h3 className="text-xs font-black uppercase text-slate-700 tracking-wider">{p.t}</h3>
+              <motion.div 
+                key={idx} 
+                whileHover={{ x: 10, scale: 1.02 }}
+                className="bg-white/60 backdrop-blur-md border border-slate-200/40 rounded-3xl p-5 space-y-2 shadow-sm hover:shadow-xl hover:shadow-rose-500/10 hover:border-rose-300/50 transition-colors group cursor-pointer"
+              >
+                <span className="text-xs font-black text-rose-500 group-hover:text-rose-600 transition-colors">{p.num}</span>
+                <h3 className="text-xs font-black uppercase text-slate-700 tracking-wider group-hover:text-slate-900">{p.t}</h3>
                 <p className="text-[11px] text-slate-500 font-medium leading-relaxed">{p.d}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -508,11 +515,16 @@ export default function LandingPage() {
               { t: "Integrated Loyalty Program", d: "Poin belanja terakumulasi otomatis ke nomor HP member, siap ditukarkan dengan kupon diskon." },
               { t: "Log Feedback & Klaim", d: "Menerima ulasan kepuasan dan pencatatan komplain pakaian warga demi menjaga mutu pelayanan." }
             ].map((s, idx) => (
-              <div key={idx} className="bg-white border border-slate-200/50 shadow-sm rounded-3xl p-5 space-y-2 hover:border-blue-500/20 transition-all">
-                <span className="w-6 h-6 rounded-md bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold text-xs">✓</span>
-                <h3 className="text-xs font-black uppercase text-slate-700 tracking-wider">{s.t}</h3>
-                <p className="text-[11px] text-slate-500 font-medium leading-relaxed">{s.d}</p>
-              </div>
+              <motion.div 
+                key={idx} 
+                whileHover={{ scale: 1.05 }}
+                className="bg-white backdrop-blur-md border border-slate-200/50 shadow-sm rounded-3xl p-5 space-y-3 hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] transition-all group cursor-pointer relative overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-200/50 transition-colors"></div>
+                <span className="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold text-sm shadow-inner group-hover:bg-blue-600 group-hover:text-white transition-all relative z-10">✓</span>
+                <h3 className="text-xs font-black uppercase text-slate-700 tracking-wider relative z-10">{s.t}</h3>
+                <p className="text-[11px] text-slate-500 font-medium leading-relaxed relative z-10">{s.d}</p>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -534,14 +546,23 @@ export default function LandingPage() {
               { num: "03", step: "Proses Pencucian", d: "Pakaian dicuci terpisah menggunakan mesin khusus sesuai instruksi label kain." },
               { num: "04", step: "Selesai & Notifikasi", d: "Setelah disetrika rapi, sistem mengirim pesan instan bahwa cucian siap diambil." }
             ].map((wf, idx) => (
-              <div key={idx} className="bg-white/80 border border-slate-200/40 shadow-sm rounded-3xl p-6 text-left space-y-4 hover:border-blue-500/30 transition-all">
+              <motion.div 
+                key={idx} 
+                whileHover={{ y: -15, scale: 1.02 }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="bg-white/90 backdrop-blur-sm border border-slate-200/50 shadow-md rounded-3xl p-6 text-left space-y-4 hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/20 transition-colors group cursor-pointer relative"
+              >
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-cyan-400 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-b-3xl"></div>
                 <div className="flex justify-between items-center">
-                  <span className="text-2xl font-black text-blue-600/30">{wf.num}</span>
-                  {idx < 3 && <HiOutlineArrowNarrowRight className="text-slate-300 hidden lg:block text-lg" />}
+                  <span className="text-3xl font-black text-slate-200 group-hover:text-blue-500/20 transition-colors">{wf.num}</span>
+                  {idx < 3 && <HiOutlineArrowNarrowRight className="text-slate-300 hidden lg:block text-2xl group-hover:translate-x-2 group-hover:text-blue-500 transition-all" />}
                 </div>
                 <h3 className="text-xs font-black uppercase tracking-wider text-slate-700">{wf.step}</h3>
                 <p className="text-[11px] text-slate-500 font-medium leading-relaxed">{wf.d}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -975,44 +996,66 @@ export default function LandingPage() {
       {/* ═══════════════════════════════════════
           LOKASI OUTLET
       ═══════════════════════════════════════ */}
-      <section id="lokasi" className="py-20 bg-white/40 border-t border-slate-200/50">
-        <div className="max-w-7xl mx-auto px-6 space-y-12">
-          <div className="text-center space-y-2">
-            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-blue-600">JARINGAN OUTLET</span>
-            <h2 className="text-3xl font-black text-slate-800 uppercase italic">Temukan Outlet Netto Terdekat</h2>
-            <p className="text-sm text-slate-500 font-medium max-w-xl mx-auto leading-relaxed">Kunjungi outlet kami yang tersebar di berbagai lokasi strategis di Kota Bandung, atau manfaatkan layanan antar-jemput gratis radius 2 KM.</p>
+      <section id="lokasi" className="py-24 relative overflow-hidden bg-white/40 border-t border-slate-200/50">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-sky-500/5 rounded-full blur-[100px] pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-6 space-y-16 relative z-10">
+          <div className="text-center space-y-4">
+            <span className="inline-block text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 border border-blue-200 rounded-full px-4 py-1.5 bg-blue-50">Jaringan Outlet</span>
+            <h2 className="text-4xl md:text-5xl font-black text-slate-800 uppercase italic">
+              Temukan Outlet <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-sky-500">Terdekat</span>
+            </h2>
+            <p className="text-sm text-slate-500 font-medium max-w-xl mx-auto leading-relaxed">Kunjungi outlet kami yang tersebar di lokasi strategis, atau nikmati layanan antar-jemput gratis untuk radius 2 KM.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {outlets.map((o, idx) => (
-              <div key={idx} className="bg-white border border-slate-200/40 shadow-sm rounded-3xl p-6 space-y-4 hover:border-blue-500/30 hover:shadow-md transition-all group">
-                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
-                  <HiOutlineLocationMarker className="text-xl" />
-                </div>
-                <div className="space-y-1">
-                  <h3 className="text-xs font-black uppercase tracking-wider text-slate-800">{o.name}</h3>
-                  <p className="text-[11px] text-slate-500 font-medium leading-relaxed">{o.address}</p>
-                </div>
-                <div className="space-y-1.5 text-[10.5px] font-bold text-slate-600">
-                  <p className="flex items-center gap-2">🕒 {o.hours}</p>
-                  <p className="flex items-center gap-2">📞 {o.phone}</p>
-                </div>
-                <a href={o.maps} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-blue-600 hover:text-blue-500 transition-colors">
-                  Lihat di Maps <HiArrowRight size={12} />
-                </a>
-              </div>
-            ))}
-          </div>
-          {/* Embedded Map Placeholder */}
-          <div className="rounded-3xl overflow-hidden border border-slate-200/50 shadow-sm h-72 bg-slate-100 relative">
-            <iframe
-              title="Lokasi Netto Laundry"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.46282798566!2d107.5306113!3d-6.9174639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6398252477f%3A0x146a1f93d3e815b2!2sBandung%2C%20Kota%20Bandung%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1688000000000!5m2!1sid!2sid"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-            />
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {/* Cards Column */}
+            <div className="lg:col-span-5 flex flex-col gap-4">
+              {outlets.map((o, idx) => (
+                <motion.div 
+                  key={idx} 
+                  whileHover={{ x: 10, scale: 1.02 }}
+                  className="bg-white/80 backdrop-blur-xl border border-slate-200/50 shadow-sm rounded-3xl p-5 hover:border-blue-400/50 hover:bg-white hover:shadow-md transition-colors group cursor-pointer flex gap-4 items-center"
+                >
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/10 to-sky-500/10 text-blue-600 flex items-center justify-center shrink-0 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] transition-all border border-blue-100">
+                    <HiOutlineLocationMarker className="text-2xl" />
+                  </div>
+                  <div className="space-y-1.5 flex-1">
+                    <h3 className="text-sm font-black uppercase tracking-wider text-slate-800 group-hover:text-blue-600 transition-colors">{o.name}</h3>
+                    <p className="text-[10px] text-slate-500 font-medium leading-relaxed">{o.address}</p>
+                    <div className="flex gap-4 pt-1">
+                      <span className="flex items-center gap-1.5 text-[9px] font-bold text-slate-600">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> {o.hours}
+                      </span>
+                      <a href={o.maps} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-blue-600 hover:text-blue-500 transition-colors ml-auto">
+                        Arahkan <HiArrowRight size={10} />
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Map Column */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="lg:col-span-7 h-[400px] lg:h-auto rounded-[2rem] overflow-hidden border border-slate-200/50 shadow-sm relative group bg-white"
+            >
+              <div className="absolute inset-0 bg-blue-500/5 mix-blend-color pointer-events-none group-hover:opacity-0 transition-opacity duration-700 z-10" />
+              <iframe
+                title="Lokasi Netto Laundry"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.46282798566!2d107.5306113!3d-6.9174639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6398252477f%3A0x146a1f93d3e815b2!2sBandung%2C%20Kota%20Bandung%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1688000000000!5m2!1sid!2sid"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                className="z-0 relative"
+              />
+            </motion.div>
           </div>
         </div>
       </section>

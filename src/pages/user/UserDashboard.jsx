@@ -76,82 +76,81 @@ export default function UserDashboard() {
   ];
 
   return (
-    <div className="space-y-5">
-      {/* POIN CARD (Premium Gradient) */}
-      <div className="bg-gradient-to-br from-blue-600 to-sky-500 rounded-3xl shadow-xl shadow-blue-500/20 border border-blue-400/50 p-6 flex items-center justify-between text-white relative overflow-hidden">
-        {/* Dekorasi Card */}
-        <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+    <div className="space-y-6">
+      {/* POIN CARD (Clean Minimalist) */}
+      <div className="bg-slate-900 rounded-3xl p-6 flex flex-col sm:flex-row sm:items-center justify-between text-white relative overflow-hidden shadow-md">
         <div className="relative z-10">
-          <p className="text-[10px] font-black uppercase tracking-widest text-blue-100/90">Total Poin Saya</p>
-          <p className="text-5xl font-black mt-1 tracking-tight">
+          <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Total Poin Saya</p>
+          <p className="text-4xl font-black mt-1 tracking-tight text-white">
             {loading ? "..." : (customer?.points ?? 0).toLocaleString("id-ID")}
           </p>
-          <div className="inline-flex items-center gap-1.5 mt-2 bg-white/20 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full">
-            <HiGift size={12} className="text-blue-50" />
-            <p className="text-[10px] font-bold text-white uppercase tracking-widest">
+          <div className="inline-flex items-center gap-1.5 mt-3 bg-white/10 px-3 py-1 rounded-full border border-white/10">
+            <HiGift size={14} className="text-blue-400" />
+            <p className="text-[10px] font-bold text-slate-100 uppercase tracking-widest">
               {customer?.segment || "Regular"} Member
             </p>
           </div>
         </div>
-        <div className="relative z-10 w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl border border-white/20 flex items-center justify-center shadow-inner">
-          <HiTrendingUp size={30} className="text-white drop-shadow-md" />
+        <div className="relative z-10 w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mt-4 sm:mt-0">
+          <HiTrendingUp size={28} className="text-blue-400" />
         </div>
       </div>
 
       {/* ACTIVE ORDER */}
-      <div>
-        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-500 px-1">
           Status Order Aktif
         </p>
         {loading ? (
-          <div className="bg-white/70 backdrop-blur-xl rounded-3xl border border-white p-5 flex items-center gap-3 shadow-sm">
-            <div className="w-8 h-8 border-4 border-blue-100 border-t-blue-500 rounded-full animate-spin" />
-            <span className="text-sm text-slate-400 font-bold">Memuat...</span>
+          <div className="bg-white rounded-3xl border border-slate-200 p-5 flex items-center gap-3 shadow-sm">
+            <div className="w-6 h-6 border-2 border-slate-100 border-t-blue-600 rounded-full animate-spin" />
+            <span className="text-sm text-slate-500 font-bold">Memuat data...</span>
           </div>
         ) : activeOrder ? (
           <Link
             to={`/track/${activeOrder.id}`}
-            className="bg-white/70 backdrop-blur-xl rounded-3xl border border-white p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-all group block relative overflow-hidden"
+            className="bg-white rounded-3xl border border-slate-200 p-5 flex items-center justify-between shadow-sm hover:border-blue-500 transition-colors group block"
           >
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-blue-500 to-sky-400"></div>
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center">
-                <MdLocalLaundryService size={22} className="text-blue-600" />
+              <div className="w-12 h-12 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center">
+                <MdLocalLaundryService size={22} className="text-slate-600 group-hover:text-blue-600 transition-colors" />
               </div>
               <div>
                 <p className="text-sm font-black text-slate-800">{activeOrder.id}</p>
-                <p className="text-[10px] text-slate-400 font-bold mt-0.5">{activeOrder.service}</p>
-                <span className={`inline-block mt-1 text-[9px] font-black px-2 py-0.5 rounded-lg ${STATUS_COLOR[activeOrder.status] || "bg-slate-100 text-slate-600"}`}>
+                <p className="text-[11px] text-slate-500 font-medium mt-0.5">{activeOrder.service}</p>
+                <span className={`inline-block mt-2 text-[10px] font-bold px-2.5 py-1 rounded-md ${STATUS_COLOR[activeOrder.status] || "bg-slate-100 text-slate-600"}`}>
                   {activeOrder.status}
                 </span>
               </div>
             </div>
-            <HiChevronRight size={18} className="text-slate-300 group-hover:text-blue-500 transition-colors" />
+            <HiChevronRight size={20} className="text-slate-400 group-hover:text-blue-600 transition-colors" />
           </Link>
         ) : (
-          <div className="bg-white/60 backdrop-blur-md rounded-3xl border border-dashed border-slate-300 p-6 text-center">
+          <div className="bg-slate-50 rounded-3xl border border-dashed border-slate-200 p-6 text-center">
             <HiCheckCircle size={32} className="text-slate-300 mx-auto mb-2" />
-            <p className="text-sm font-black text-slate-500">Tidak ada order aktif</p>
-            <p className="text-[11px] text-slate-400 mt-1 font-medium">Semua cucian sudah beres! 🎉</p>
+            <p className="text-sm font-bold text-slate-600">Tidak ada order aktif</p>
+            <p className="text-xs text-slate-500 mt-1">Semua cucian sudah beres!</p>
           </div>
         )}
       </div>
 
       {/* SHORTCUTS */}
-      <div>
-        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 px-1">Menu Cepat</p>
-        <div className="grid grid-cols-3 gap-3">
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-500 px-1">Menu Cepat</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {SHORTCUTS.map(({ label, icon: Icon, to, color, desc }) => (
               <button
               key={to}
               onClick={() => navigate(to)}
-              className="bg-white/80 backdrop-blur-xl rounded-2xl border border-white p-4 text-left hover:shadow-lg transition-all active:scale-95 shadow-sm group"
+              className="bg-white rounded-2xl border border-slate-200 p-5 text-left hover:border-blue-500 hover:shadow-md transition-all shadow-sm group flex flex-col justify-between"
             >
-              <div className={`w-11 h-11 ${color} rounded-xl flex items-center justify-center mb-3 shadow-md group-hover:-translate-y-1 transition-transform`}>
-                <Icon size={18} className="text-white" />
+              <div className={`w-10 h-10 ${color} rounded-xl flex items-center justify-center mb-4 text-white`}>
+                <Icon size={20} />
               </div>
-              <p className="text-[11px] font-black text-slate-800">{label}</p>
-              <p className="text-[10px] text-slate-400 font-medium mt-0.5 leading-tight">{desc}</p>
+              <div>
+                <p className="text-sm font-black text-slate-800 group-hover:text-blue-600 transition-colors">{label}</p>
+                <p className="text-[11px] text-slate-500 font-medium mt-1 leading-relaxed">{desc}</p>
+              </div>
             </button>
           ))}
         </div>
@@ -159,22 +158,22 @@ export default function UserDashboard() {
 
       {/* STATS */}
       {customer && (
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white p-5 grid grid-cols-3 gap-4 text-center shadow-sm">
+        <div className="bg-white rounded-3xl border border-slate-200 p-6 grid grid-cols-3 gap-6 text-center shadow-sm">
           <div>
-            <p className="text-3xl font-black text-slate-800">{customer.totalTransactions || 0}</p>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mt-1">Order</p>
+            <p className="text-2xl font-black text-slate-800">{customer.totalTransactions || 0}</p>
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Order</p>
           </div>
-          <div className="border-x border-slate-200/60">
-            <p className="text-3xl font-black text-slate-800">
+          <div className="border-x border-slate-200">
+            <p className="text-2xl font-black text-slate-800">
               {(customer.totalSpent || 0) > 999999
                 ? `${((customer.totalSpent || 0) / 1000000).toFixed(1)}Jt`
                 : `${Math.round((customer.totalSpent || 0) / 1000)}K`}
             </p>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mt-1">Dihabiskan</p>
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Total Belanja</p>
           </div>
           <div>
-            <p className="text-3xl font-black text-blue-600">{customer.points || 0}</p>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wide mt-1">Poin</p>
+            <p className="text-2xl font-black text-blue-600">{customer.points || 0}</p>
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Poin</p>
           </div>
         </div>
       )}
