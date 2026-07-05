@@ -189,15 +189,26 @@ export default function Login() {
             </button>
           </form>
 
-          {/* CUSTOMER FOOTER */}
-          <div className="mt-6 border-t border-slate-100 pt-4 text-center text-sm font-bold text-slate-400">
-            Pelanggan yang ingin cek cucian?{" "}
-            <Link 
-              to="/cek-order" 
-              className="text-blue-600 font-black hover:text-blue-700 hover:underline transition-colors"
-            >
-              Cek Order di sini
-            </Link>
+          {/* FOOTER LINKS */}
+          <div className="mt-6 border-t border-slate-100 pt-4 space-y-2 text-center text-sm font-bold text-slate-400">
+            <p>
+              Belum punya akun?{" "}
+              <Link 
+                to="/register" 
+                className="text-blue-600 font-black hover:text-blue-700 hover:underline transition-colors"
+              >
+                Daftar sekarang
+              </Link>
+            </p>
+            <p>
+              Pelanggan? Cek status cucian{" "}
+              <Link 
+                to="/cek-order" 
+                className="text-blue-600 font-black hover:text-blue-700 hover:underline transition-colors"
+              >
+                di sini
+              </Link>
+            </p>
           </div>
 
         </div>
