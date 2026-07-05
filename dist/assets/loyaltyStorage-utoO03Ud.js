@@ -1,0 +1,4 @@
+import{s as o}from"./index-CU4l2L6g.js";import{u as m}from"./customerStorage-BRBxXNFu.js";const n="reward_redemptions";async function p(r,e,a){if(e<a.points)throw new Error("Poin tidak cukup");const s=e-a.points;await m(r,{points:s});const{data:i,error:t}=await o.from(n).insert([{customer_id:r,reward_id:a.id,reward_name:a.name,points_cost:a.points,status:"pending"}]).select().single();if(t)throw console.error("Gagal menyimpan riwayat klaim:",t),t;return{data:i,newPoints:s}}async function u(){const{data:r,error:e}=await o.from(n).select(`
+      *,
+      customers ( name, phone )
+    `).order("created_at",{ascending:!1});return e?(console.error("Gagal memuat data penukaran reward:",e),[]):r}async function l(r,e){const{error:a}=await o.from(n).update({status:e}).eq("id",r);if(a)throw console.error("Gagal mengubah status reward:",a),a}export{u as l,p as r,l as v};

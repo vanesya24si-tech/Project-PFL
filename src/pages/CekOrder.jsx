@@ -1,15 +1,28 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { HiOutlineSearchCircle, HiPhone, HiClipboardList, HiArrowLeft, HiArrowSmRight } from "react-icons/hi";
 import { MdLocalLaundryService } from "react-icons/md";
 import { getOrderById } from "../utils/ordersStorage";
+import { useAuth } from "../utils/AuthContext";
 
 export default function CekOrder() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { loginAsCustomer } = useAuth();
+
+  const queryParams = new URLSearchParams(location.search);
+  const paramOrderId = queryParams.get("orderId") || "";
+
   const [orderId, setOrderId] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (paramOrderId) {
+      setOrderId(paramOrderId.toUpperCase());
+    }
+  }, [paramOrderId]);
 
   const normalize = (s) => s?.replace(/\D/g, "") ?? "";
 
@@ -40,8 +53,9 @@ export default function CekOrder() {
         return;
       }
 
-      // Lolos verifikasi → redirect ke halaman tracking publik
-      navigate(`/track/${data.id}`);
+      // Lolos verifikasi → login sebagai customer & redirect ke portal /user
+      loginAsCustomer(data);
+      navigate("/user");
     } catch (err) {
       console.error(err);
       setError("Terjadi kesalahan. Silakan coba lagi.");

@@ -4,6 +4,7 @@ import { HiCheckCircle, HiClock, HiExclamationCircle } from "react-icons/hi";
 import { MdLocalLaundryService, MdIron, MdLayers } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
 import { getOrderById, subscribeToOrder, STEP_THEME } from "../utils/ordersStorage";
+import { useAuth } from "../utils/AuthContext";
 
 // ====================================================================
 // HALAMAN PUBLIK — dibuka pelanggan lewat scan barcode/QR di struk.
@@ -14,6 +15,7 @@ import { getOrderById, subscribeToOrder, STEP_THEME } from "../utils/ordersStora
 
 export default function TrackOrder() {
   const { orderId } = useParams();
+  const { role } = useAuth();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -174,16 +176,34 @@ export default function TrackOrder() {
           )}
         </div>
 
-        <a
-          href={`https://wa.me/?text=${encodeURIComponent(
-            `Halo, saya mau tanya soal laundry saya nomor nota ${order.id}.`
-          )}`}
-          target="_blank"
-          rel="noreferrer"
-          className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm py-3 rounded-2xl transition-all"
-        >
-          <FaWhatsapp size={16} /> Hubungi Laundry
-        </a>
+        <div className="space-y-3">
+          <a
+            href={`https://wa.me/?text=${encodeURIComponent(
+              `Halo, saya mau tanya soal laundry saya nomor nota ${order.id}.`
+            )}`}
+            target="_blank"
+            rel="noreferrer"
+            className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs py-2.5 rounded-xl transition-all cursor-pointer text-center"
+          >
+            <FaWhatsapp size={16} /> Hubungi Laundry
+          </a>
+
+          {role === "customer" ? (
+            <Link
+              to="/user"
+              className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs py-2.5 rounded-xl transition-all cursor-pointer text-center"
+            >
+              <HiExclamationCircle size={16} /> Masuk Dasbor Pelanggan & Komplain
+            </Link>
+          ) : (
+            <Link
+              to={`/cek-order?orderId=${order.id}`}
+              className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs py-2.5 rounded-xl transition-all cursor-pointer text-center"
+            >
+              <HiExclamationCircle size={16} /> Verifikasi untuk Ajukan Komplain
+            </Link>
+          )}
+        </div>
 
         <p className="text-center text-[10px] font-medium text-slate-400 mt-4">
           Halaman ini update otomatis secara realtime setiap kali status laundry kamu berubah.

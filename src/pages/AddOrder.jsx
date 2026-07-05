@@ -200,7 +200,7 @@ export default function AddOrderForm() {
       weight,
       price: totalPrice,
       isPaid: paymentMethod !== "nanti",
-      detail: `Order baru dari kasir. Menunggu diproses (${weight} Kg).`,
+      detail: notes.trim() || `Order baru dari kasir. Menunggu diproses (${weight} Kg).`,
     });
 
     setIsSubmitting(false);

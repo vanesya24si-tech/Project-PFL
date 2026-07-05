@@ -35,26 +35,49 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const initializeAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      let fallbackRole = session?.user?.user_metadata?.role ?? null;
+      
+      if (session) {
+        let fallbackRole = session.user?.user_metadata?.role ?? null;
+        if (!fallbackRole) {
+          const { data: profileData } = await supabase
+            .from("profiles")
+            .select("role")
+            .eq("id", session.user.id)
+            .maybeSingle();
 
-      if (session?.user && !fallbackRole) {
-        const { data: profileData } = await supabase
-          .from("profiles")
-          .select("role")
-          .eq("id", session.user.id)
-          .maybeSingle();
-
-        fallbackRole = profileData?.role ?? null;
+          fallbackRole = profileData?.role ?? null;
+        }
+        syncAuthState(session, fallbackRole);
+      } else {
+        // Cek jika ada sesi mock customer di localStorage
+        const savedUser = localStorage.getItem(USER_STORAGE_KEY);
+        const savedRole = localStorage.getItem(ROLE_STORAGE_KEY);
+        if (savedRole === "customer" && savedUser) {
+          try {
+            setUser(JSON.parse(savedUser));
+            setRole("customer");
+          } catch (e) {
+            syncAuthState(null);
+          }
+        } else {
+          syncAuthState(null);
+        }
       }
-
-      syncAuthState(session, fallbackRole);
       setLoading(false);
     };
 
     initializeAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      syncAuthState(nextSession);
+      if (nextSession) {
+        syncAuthState(nextSession);
+      } else {
+        // Pertahankan sesi jika login sebagai mock customer
+        const savedRole = localStorage.getItem(ROLE_STORAGE_KEY);
+        if (savedRole !== "customer") {
+          syncAuthState(null);
+        }
+      }
       setLoading(false);
     });
 
@@ -62,6 +85,22 @@ export const AuthProvider = ({ children }) => {
       subscription.unsubscribe();
     };
   }, []);
+
+  const loginAsCustomer = (orderData) => {
+    const mockUser = {
+      id: orderData.id,
+      email: "",
+      user_metadata: {
+        name: orderData.user || orderData.customer_name,
+        phone: orderData.phone,
+        role: "customer"
+      }
+    };
+    setUser(mockUser);
+    setRole("customer");
+    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(mockUser));
+    localStorage.setItem(ROLE_STORAGE_KEY, "customer");
+  };
 
   const login = async (email, password) => {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
@@ -115,7 +154,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, role, login, register, logout, resetPassword }}>
+    <AuthContext.Provider value={{ user, session, loading, role, login, register, logout, resetPassword, loginAsCustomer }}>
       {children}
     </AuthContext.Provider>
   );
