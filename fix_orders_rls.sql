@@ -14,7 +14,7 @@ drop policy if exists "Allow public read orders" on public.orders;
 drop policy if exists "Allow authenticated insert orders" on public.orders;
 drop policy if exists "Allow authenticated update orders" on public.orders;
 
--- 3. BUAT ULANG POLICY PUBLIK (ini yang paling penting)
+-- 3. BUAT ULANG POLICY PUBLIK
 -- Siapa saja (termasuk yang tidak login / scan barcode) bisa BACA order
 create policy "Public can read orders for tracking"
   on public.orders
@@ -37,8 +37,4 @@ create policy "Authenticated can update orders"
   using (true)
   with check (true);
 
--- 4. Pastikan realtime aktif untuk tabel orders
--- (agar status update admin langsung terlihat di HP pelanggan)
-alter publication supabase_realtime add table public.orders;
-
--- Selesai! Sekarang QR code bisa diakses siapa saja tanpa login.
+-- Selesai! Realtime sudah aktif sebelumnya, tidak perlu diulang.
