@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { HiOutlineSearchCircle, HiPhone, HiClipboardList, HiArrowLeft, HiArrowSmRight } from "react-icons/hi";
+import { HiOutlineSearchCircle, HiClipboardList, HiArrowLeft, HiArrowSmRight } from "react-icons/hi";
 import { MdLocalLaundryService } from "react-icons/md";
 import { getOrderById } from "../utils/ordersStorage";
 import { useAuth } from "../utils/AuthContext";
@@ -14,7 +14,6 @@ export default function CekOrder() {
   const paramOrderId = queryParams.get("orderId") || "";
 
   const [orderId, setOrderId] = useState("");
-  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -24,14 +23,12 @@ export default function CekOrder() {
     }
   }, [paramOrderId]);
 
-  const normalize = (s) => s?.replace(/\D/g, "") ?? "";
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    if (!orderId.trim() || !phone.trim()) {
-      setError("Mohon isi No. Order dan No. HP terlebih dahulu.");
+    if (!orderId.trim()) {
+      setError("Mohon isi No. Order terlebih dahulu.");
       return;
     }
 
@@ -41,15 +38,6 @@ export default function CekOrder() {
 
       if (fetchErr || !data) {
         setError("No. Order tidak ditemukan. Pastikan penulisan sudah benar.");
-        return;
-      }
-
-      // Verifikasi nomor HP cocok dengan order
-      const inputPhone = normalize(phone);
-      const orderPhone = normalize(data.phone);
-
-      if (orderPhone && inputPhone && orderPhone !== inputPhone) {
-        setError("No. HP tidak sesuai dengan data order. Silakan cek kembali.");
         return;
       }
 
@@ -138,30 +126,6 @@ export default function CekOrder() {
                 </div>
                 <p className="text-[10px] text-slate-400 font-medium pl-1">
                   No. Order tercetak di struk / barcode yang diberikan kasir.
-                </p>
-              </div>
-
-              {/* NO. HP */}
-              <div className="space-y-1.5">
-                <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 pl-1">
-                  Nomor HP / WhatsApp
-                </label>
-                <div className="relative">
-                  <HiPhone
-                    size={18}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Contoh: 08123456789"
-                    disabled={loading}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-11 pr-4 py-2.5 text-sm font-bold text-slate-800 outline-none focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all placeholder:text-slate-400"
-                  />
-                </div>
-                <p className="text-[10px] text-slate-400 font-medium pl-1">
-                  Nomor yang sama saat Anda menitipkan cucian di kasir.
                 </p>
               </div>
 

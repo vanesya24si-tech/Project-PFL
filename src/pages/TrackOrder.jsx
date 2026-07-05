@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { HiCheckCircle, HiClock, HiExclamationCircle } from "react-icons/hi";
 import { MdLocalLaundryService, MdIron, MdLayers } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
@@ -15,7 +15,8 @@ import { useAuth } from "../utils/AuthContext";
 
 export default function TrackOrder() {
   const { orderId } = useParams();
-  const { role } = useAuth();
+  const { role, loginAsCustomer } = useAuth();
+  const navigate = useNavigate();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -196,12 +197,15 @@ export default function TrackOrder() {
               <HiExclamationCircle size={16} /> Masuk Dasbor Pelanggan & Komplain
             </Link>
           ) : (
-            <Link
-              to={`/cek-order?orderId=${order.id}`}
-              className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs py-2.5 rounded-xl transition-all cursor-pointer text-center"
+            <button
+              onClick={() => {
+                loginAsCustomer(order);
+                navigate("/user");
+              }}
+              className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs py-2.5 rounded-xl transition-all cursor-pointer text-center border-none"
             >
-              <HiExclamationCircle size={16} /> Verifikasi untuk Ajukan Komplain
-            </Link>
+              <HiExclamationCircle size={16} /> Masuk Portal & Ajukan Komplain
+            </button>
           )}
         </div>
 
