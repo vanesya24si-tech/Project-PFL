@@ -36,7 +36,7 @@ export default function UserLayout() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F0F7FF] via-[#F8FAFC] to-[#E0F2FE] flex flex-col font-sans antialiased selection:bg-blue-500 selection:text-white">
       {/* TOP HEADER */}
-      <header className={`${headerGradient} text-white px-5 pt-10 pb-16 relative overflow-hidden shadow-lg shadow-blue-500/10 transition-all`}>
+      <header className={`${headerGradient} text-white px-5 pt-5 pb-10 relative overflow-hidden shadow-lg shadow-blue-500/10 transition-all`}>
         {/* Dekorasi bulat */}
         <div className="absolute -top-8 -right-8 w-40 h-40 bg-white/10 rounded-full" />
         <div className="absolute top-4 right-10 w-20 h-20 bg-white/5 rounded-full" />
@@ -54,7 +54,7 @@ export default function UserLayout() {
       </header>
 
       {/* CONTENT — ditarik ke atas untuk overlapping card effect */}
-      <main className="flex-1 -mt-8 px-4 pb-28 space-y-4 relative z-10 max-w-lg mx-auto w-full">
+      <main className="flex-1 -mt-6 px-4 pb-28 space-y-4 relative z-10 max-w-lg mx-auto w-full">
         <Outlet />
       </main>
 

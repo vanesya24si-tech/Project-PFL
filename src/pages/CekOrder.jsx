@@ -81,8 +81,8 @@ export default function CekOrder() {
 
           {/* ICON & TITLE */}
           <div className="text-center space-y-3">
-            <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-blue-200">
-              <MdLocalLaundryService size={30} className="text-white" />
+            <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-blue-200">
+              <MdLocalLaundryService size={24} className="text-white" />
             </div>
             <div>
               <h1 className="text-2xl font-black text-slate-800">Cek Status Cucian</h1>
@@ -93,7 +93,7 @@ export default function CekOrder() {
           </div>
 
           {/* FORM CARD */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-7 space-y-5">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
 
             {/* ERROR ALERT */}
             {error && (
@@ -119,7 +119,7 @@ export default function CekOrder() {
                     onChange={(e) => setOrderId(e.target.value)}
                     placeholder="Contoh: ORD-1234"
                     disabled={loading}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-11 pr-4 py-3.5 text-sm font-bold text-slate-800 outline-none focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all placeholder:text-slate-400 uppercase"
+                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-11 pr-4 py-2.5 text-sm font-bold text-slate-800 outline-none focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all placeholder:text-slate-400 uppercase"
                   />
                 </div>
                 <p className="text-[10px] text-slate-400 font-medium pl-1">
@@ -143,7 +143,7 @@ export default function CekOrder() {
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="Contoh: 08123456789"
                     disabled={loading}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-11 pr-4 py-3.5 text-sm font-bold text-slate-800 outline-none focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all placeholder:text-slate-400"
+                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-11 pr-4 py-2.5 text-sm font-bold text-slate-800 outline-none focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 transition-all placeholder:text-slate-400"
                   />
                 </div>
                 <p className="text-[10px] text-slate-400 font-medium pl-1">
@@ -155,7 +155,7 @@ export default function CekOrder() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 hover:bg-blue-700 py-4 text-sm font-black uppercase tracking-widest text-white shadow-md shadow-blue-200 transition-all active:scale-[0.98] disabled:opacity-50 cursor-pointer mt-2"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 hover:bg-blue-700 py-2.5 text-sm font-black uppercase tracking-widest text-white shadow-md shadow-blue-200 transition-all active:scale-[0.98] disabled:opacity-50 cursor-pointer mt-2"
               >
                 {loading ? "Mencari..." : (
                   <>

@@ -76,12 +76,12 @@ export default function UserDashboard() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* POIN CARD (Clean Minimalist) */}
-      <div className="bg-slate-900 rounded-3xl p-6 flex flex-col sm:flex-row sm:items-center justify-between text-white relative overflow-hidden shadow-md">
+      <div className="bg-slate-900 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between text-white relative overflow-hidden shadow-md">
         <div className="relative z-10">
           <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Total Poin Saya</p>
-          <p className="text-4xl font-black mt-1 tracking-tight text-white">
+          <p className="text-3xl font-black mt-1 tracking-tight text-white">
             {loading ? "..." : (customer?.points ?? 0).toLocaleString("id-ID")}
           </p>
           <div className="inline-flex items-center gap-1.5 mt-3 bg-white/10 px-3 py-1 rounded-full border border-white/10">
@@ -91,7 +91,7 @@ export default function UserDashboard() {
             </p>
           </div>
         </div>
-        <div className="relative z-10 w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mt-4 sm:mt-0">
+        <div className="relative z-10 w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center mt-4 sm:mt-0">
           <HiTrendingUp size={28} className="text-blue-400" />
         </div>
       </div>
@@ -102,17 +102,17 @@ export default function UserDashboard() {
           Status Order Aktif
         </p>
         {loading ? (
-          <div className="bg-white rounded-3xl border border-slate-200 p-5 flex items-center gap-3 shadow-sm">
+          <div className="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-3 shadow-sm">
             <div className="w-6 h-6 border-2 border-slate-100 border-t-blue-600 rounded-full animate-spin" />
             <span className="text-sm text-slate-500 font-bold">Memuat data...</span>
           </div>
         ) : activeOrder ? (
           <Link
             to={`/track/${activeOrder.id}`}
-            className="bg-white rounded-3xl border border-slate-200 p-5 flex items-center justify-between shadow-sm hover:border-blue-500 transition-colors group block"
+            className="bg-white rounded-2xl border border-slate-200 p-4 flex items-center justify-between shadow-sm hover:border-blue-500 transition-colors group block"
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center">
                 <MdLocalLaundryService size={22} className="text-slate-600 group-hover:text-blue-600 transition-colors" />
               </div>
               <div>
@@ -126,7 +126,7 @@ export default function UserDashboard() {
             <HiChevronRight size={20} className="text-slate-400 group-hover:text-blue-600 transition-colors" />
           </Link>
         ) : (
-          <div className="bg-slate-50 rounded-3xl border border-dashed border-slate-200 p-6 text-center">
+          <div className="bg-slate-50 rounded-2xl border border-dashed border-slate-200 p-4 text-center">
             <HiCheckCircle size={32} className="text-slate-300 mx-auto mb-2" />
             <p className="text-sm font-bold text-slate-600">Tidak ada order aktif</p>
             <p className="text-xs text-slate-500 mt-1">Semua cucian sudah beres!</p>
@@ -137,14 +137,14 @@ export default function UserDashboard() {
       {/* SHORTCUTS */}
       <div className="space-y-3">
         <p className="text-xs font-bold uppercase tracking-widest text-slate-500 px-1">Menu Cepat</p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {SHORTCUTS.map(({ label, icon: Icon, to, color, desc }) => (
               <button
               key={to}
               onClick={() => navigate(to)}
-              className="bg-white rounded-2xl border border-slate-200 p-5 text-left hover:border-blue-500 hover:shadow-md transition-all shadow-sm group flex flex-col justify-between"
+              className="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:border-blue-500 hover:shadow-md transition-all shadow-sm group flex flex-col justify-between"
             >
-              <div className={`w-10 h-10 ${color} rounded-xl flex items-center justify-center mb-4 text-white`}>
+              <div className={`w-10 h-10 ${color} rounded-xl flex items-center justify-center mb-2 text-white`}>
                 <Icon size={20} />
               </div>
               <div>
@@ -158,7 +158,7 @@ export default function UserDashboard() {
 
       {/* STATS */}
       {customer && (
-        <div className="bg-white rounded-3xl border border-slate-200 p-6 grid grid-cols-3 gap-6 text-center shadow-sm">
+        <div className="bg-white rounded-2xl border border-slate-200 p-4 grid grid-cols-3 gap-4 text-center shadow-sm">
           <div>
             <p className="text-2xl font-black text-slate-800">{customer.totalTransactions || 0}</p>
             <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Order</p>

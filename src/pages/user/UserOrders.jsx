@@ -71,10 +71,10 @@ export default function UserOrders() {
   return (
     <div className="space-y-4">
       {/* HEADER CARD */}
-      <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white shadow-sm p-5">
-        <div className="flex items-center gap-3 mb-4">
+      <div className="bg-white/80 rounded-2xl border border-slate-200 shadow-sm p-4">
+        <div className="flex items-center gap-3 mb-2">
           {/* Blue gradient icon box */}
-          <div className="w-11 h-11 bg-gradient-to-br from-blue-600 to-sky-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25">
+          <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-sky-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25">
             <HiClipboardList size={22} className="text-white" />
           </div>
           <div className="flex-1">
@@ -91,7 +91,7 @@ export default function UserOrders() {
         </div>
 
         {/* Search — floating rounded with icon */}
-        <div className="relative mb-4">
+        <div className="relative mb-2">
           <HiSearch
             className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
             size={16}
@@ -101,7 +101,7 @@ export default function UserOrders() {
             placeholder="Cari nomor nota atau layanan..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 text-sm bg-slate-50/80 border border-slate-200 rounded-2xl font-bold placeholder:text-slate-300 focus:border-blue-400 outline-none transition-all"
+            className="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50/80 border border-slate-200 rounded-2xl font-bold placeholder:text-slate-300 focus:border-blue-400 outline-none transition-all"
           />
         </div>
 
@@ -125,7 +125,7 @@ export default function UserOrders() {
 
       {/* ORDER LIST */}
       {loading ? (
-        <div className="bg-white/60 backdrop-blur-md rounded-3xl border border-dashed border-slate-300 p-8 text-center">
+        <div className="bg-white/60 rounded-2xl border border-dashed border-slate-300 p-8 text-center">
           <div className="w-10 h-10 border-4 border-blue-100 border-t-blue-500 rounded-full animate-spin mx-auto mb-3" />
           <p className="text-sm font-black text-slate-400">Memuat pesanan...</p>
           <p className="text-[10px] font-black uppercase tracking-widest text-slate-300 mt-1">
@@ -133,8 +133,8 @@ export default function UserOrders() {
           </p>
         </div>
       ) : filtered.length === 0 ? (
-        <div className="bg-white/60 backdrop-blur-md rounded-3xl border border-dashed border-slate-300 p-8 text-center">
-          <div className="w-14 h-14 bg-slate-100/80 rounded-2xl flex items-center justify-center mx-auto mb-3">
+        <div className="bg-white/60 rounded-2xl border border-dashed border-slate-300 p-8 text-center">
+          <div className="w-11 h-11 bg-slate-100/80 rounded-2xl flex items-center justify-center mx-auto mb-3">
             <HiExclamationCircle size={28} className="text-slate-300" />
           </div>
           <p className="text-base font-black text-slate-400">Belum ada pesanan</p>
@@ -157,7 +157,7 @@ export default function UserOrders() {
               <Link
                 key={order.id}
                 to={`/track/${order.id}`}
-                className="relative overflow-hidden bg-white/80 backdrop-blur-xl rounded-3xl border border-white shadow-sm flex items-center justify-between p-4 hover:-translate-y-0.5 hover:shadow-lg transition-all group block"
+                className="relative overflow-hidden bg-white/80 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between p-4 hover:-translate-y-0.5 hover:shadow-lg transition-all group block"
               >
                 {/* Left colored accent bar */}
                 <div
@@ -166,7 +166,7 @@ export default function UserOrders() {
 
                 <div className="flex items-center gap-3 pl-2">
                   <div
-                    className={`w-11 h-11 rounded-2xl flex items-center justify-center ${
+                    className={`w-9 h-9 rounded-2xl flex items-center justify-center ${
                       isDone ? "bg-emerald-50" : "bg-blue-50"
                     }`}
                   >

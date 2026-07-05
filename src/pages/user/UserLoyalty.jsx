@@ -71,7 +71,7 @@ export default function UserLoyalty() {
   return (
     <div className="space-y-4">
       {/* POINTS CARD — premium gradient with shimmer orbs */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-3xl p-6 text-white shadow-2xl shadow-blue-500/30 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-2xl p-4 text-white shadow-sm relative overflow-hidden">
         {/* Shimmer orb decorations */}
         <div className="absolute -top-8 -right-8 w-40 h-40 bg-white/10 rounded-full blur-xl" />
         <div className="absolute top-4 right-4 w-20 h-20 bg-white/5 rounded-full blur-md" />
@@ -79,7 +79,7 @@ export default function UserLoyalty() {
         <div className="absolute bottom-4 left-1/2 w-16 h-16 bg-blue-300/10 rounded-full blur-lg" />
 
         <div className="relative z-10">
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-2">
             <div className="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
               <HiGift size={14} className="text-blue-100" />
             </div>
@@ -88,7 +88,7 @@ export default function UserLoyalty() {
             </p>
           </div>
 
-          <p className="text-7xl font-black mb-1 tracking-tight drop-shadow-sm">
+          <p className="text-5xl font-black mb-1 tracking-tight drop-shadow-sm">
             {loading ? (
               <span className="text-4xl text-blue-200 animate-pulse">···</span>
             ) : (
@@ -108,7 +108,7 @@ export default function UserLoyalty() {
 
       {/* PROGRESS TO NEXT REWARD — glassmorphism card */}
       {nextReward && (
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white shadow-sm p-5">
+        <div className="bg-white/80 rounded-2xl border border-slate-200 shadow-sm p-4">
           <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">
             Menuju Reward Berikutnya
           </p>
@@ -155,12 +155,12 @@ export default function UserLoyalty() {
             return (
               <div
                 key={reward.id}
-                className={`bg-white/80 backdrop-blur-xl rounded-3xl border border-white shadow-sm p-4 flex items-center justify-between transition-all ${
+                className={`bg-white/80 rounded-2xl border border-slate-200 shadow-sm p-4 flex items-center justify-between transition-all ${
                   !canAfford ? "opacity-60" : "hover:shadow-md hover:-translate-y-0.5"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-12 h-12 bg-gradient-to-br ${reward.color} rounded-2xl flex items-center justify-center shrink-0 shadow-md`}>
+                  <div className={`w-10 h-10 bg-gradient-to-br ${reward.color} rounded-2xl flex items-center justify-center shrink-0 shadow-md`}>
                     <HiSparkles size={20} className="text-white drop-shadow" />
                   </div>
                   <div>

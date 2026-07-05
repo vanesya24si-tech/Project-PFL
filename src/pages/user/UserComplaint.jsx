@@ -105,8 +105,8 @@ export default function UserComplaint() {
   if (success) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center text-center space-y-5 px-4 py-10">
-        <div className="w-20 h-20 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center shadow-lg shadow-emerald-100 animate-bounce">
-          <HiCheckCircle size={40} className="text-emerald-500" />
+        <div className="w-14 h-14 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center shadow-lg shadow-emerald-100 animate-bounce">
+          <HiCheckCircle size={32} className="text-emerald-500" />
         </div>
         <div className="space-y-1">
           <h2 className="text-xl font-black text-slate-800">Komplain Terkirim!</h2>
@@ -114,7 +114,7 @@ export default function UserComplaint() {
             Tim Netto Laundry akan meninjau komplain Anda dalam 1×24 jam. Terima kasih atas kepercayaan Anda.
           </p>
         </div>
-        <div className="bg-white/80 backdrop-blur-xl rounded-2xl border border-white shadow-sm p-4 w-full max-w-xs text-left space-y-2">
+        <div className="bg-white/80 rounded-2xl border border-slate-200 shadow-sm p-4 w-full max-w-xs text-left space-y-2">
           <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Ringkasan Komplain</p>
           <p className="text-sm font-black text-slate-700">{type}</p>
           <span className="inline-flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-700 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full">
@@ -140,10 +140,10 @@ export default function UserComplaint() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 pb-4">
       {/* Header Card */}
-      <div className="bg-gradient-to-br from-red-500 to-rose-600 rounded-3xl p-5 text-white relative overflow-hidden shadow-xl shadow-red-500/20">
+      <div className="bg-gradient-to-br from-red-500 to-rose-600 rounded-2xl p-4 text-white relative overflow-hidden shadow-sm">
         <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-white/10 rounded-full blur-xl" />
         <div className="relative z-10 flex items-center gap-3">
-          <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-inner">
+          <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-inner">
             <HiExclamationCircle size={26} className="text-white" />
           </div>
           <div>
@@ -155,13 +155,13 @@ export default function UserComplaint() {
       </div>
 
       {/* Jenis Komplain */}
-      <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white shadow-sm p-5 space-y-3">
+      <div className="bg-white/80 rounded-2xl border border-slate-200 shadow-sm p-4 space-y-3">
         <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Jenis Komplain <span className="text-red-500">*</span></p>
         <div className="relative">
           <button
             type="button"
             onClick={() => setTypeOpen(!typeOpen)}
-            className="w-full flex items-center justify-between bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-left transition-all hover:border-red-300 focus:border-red-400"
+            className="w-full flex items-center justify-between bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-left transition-all hover:border-red-300 focus:border-red-400"
           >
             <span className={`text-sm font-bold ${type ? "text-slate-800" : "text-slate-400"}`}>
               {type || "Pilih jenis komplain..."}
@@ -186,9 +186,9 @@ export default function UserComplaint() {
       </div>
 
       {/* Nomor Order */}
-      <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white shadow-sm p-5 space-y-3">
+      <div className="bg-white/80 rounded-2xl border border-slate-200 shadow-sm p-4 space-y-3">
         <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Nomor Order <span className="text-slate-300">(opsional)</span></p>
-        <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 focus-within:border-red-400 transition-colors">
+        <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 focus-within:border-red-400 transition-colors">
           <MdLocalLaundryService className="text-slate-400 shrink-0" size={18} />
           <input
             type="text"
@@ -201,20 +201,20 @@ export default function UserComplaint() {
       </div>
 
       {/* Deskripsi */}
-      <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white shadow-sm p-5 space-y-3">
+      <div className="bg-white/80 rounded-2xl border border-slate-200 shadow-sm p-4 space-y-3">
         <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Deskripsi Masalah <span className="text-red-500">*</span></p>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
           placeholder="Ceritakan secara detail masalah yang Anda alami. Semakin detail, semakin cepat kami menyelesaikannya..."
-          className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm font-medium text-slate-700 placeholder:text-slate-300 outline-none focus:border-red-400 transition-colors resize-none leading-relaxed"
+          className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 text-sm font-medium text-slate-700 placeholder:text-slate-300 outline-none focus:border-red-400 transition-colors resize-none leading-relaxed"
         />
         <p className="text-[10px] text-slate-400 font-medium text-right">{description.length} karakter</p>
       </div>
 
       {/* Upload Foto */}
-      <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white shadow-sm p-5 space-y-4">
+      <div className="bg-white/80 rounded-2xl border border-slate-200 shadow-sm p-4 space-y-3">
         <div className="flex items-center justify-between">
           <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Foto Bukti</p>
           <span className="text-[10px] font-bold text-slate-400">{photos.length}/{MAX_PHOTOS} foto</span>
@@ -245,7 +245,7 @@ export default function UserComplaint() {
           <button
             type="button"
             onClick={handlePickPhoto}
-            className="w-full border-2 border-dashed border-slate-300 hover:border-red-400 hover:bg-red-50/50 rounded-2xl p-5 flex flex-col items-center gap-2 transition-all"
+            className="w-full border-2 border-dashed border-slate-300 hover:border-red-400 hover:bg-red-50/50 rounded-2xl p-4 flex flex-col items-center gap-2 transition-all"
           >
             <div className="w-11 h-11 bg-slate-100 rounded-xl flex items-center justify-center">
               <HiPhotograph size={22} className="text-slate-400" />
@@ -266,7 +266,7 @@ export default function UserComplaint() {
       </div>
 
       {/* Info Pengirim */}
-      <div className="bg-blue-50/80 backdrop-blur-xl rounded-3xl border border-blue-100 p-4 flex items-center gap-3">
+      <div className="bg-blue-50/80 rounded-2xl border border-blue-100 p-4 flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-sky-500 flex items-center justify-center text-white font-black text-base shrink-0">
           {name[0]?.toUpperCase()}
         </div>
@@ -281,7 +281,7 @@ export default function UserComplaint() {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-2xl py-4 font-black text-sm uppercase tracking-widest shadow-lg shadow-red-500/25 hover:shadow-xl hover:shadow-red-500/30 hover:-translate-y-0.5 transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        className="w-full bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-2xl py-2.5 font-black text-sm uppercase tracking-widest shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
         {submitting ? (
           <>
