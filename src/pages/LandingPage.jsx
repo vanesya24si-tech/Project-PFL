@@ -27,6 +27,7 @@ import {
 } from "react-icons/hi";
 import { useAuth } from "../utils/AuthContext";
 import { getOrderById } from "../utils/ordersStorage";
+import { loadComplaints, submitComplaint } from "../utils/complaintStorage";
 import { toast } from "react-hot-toast";
 import heroImg from "../assets/hero_image.jpg";
 
@@ -72,10 +73,8 @@ export default function LandingPage() {
   const [trackingError, setTrackingError] = useState("");
 
   // Complaints
-  const [complaints, setComplaints] = useState([
-    { id: "KLM-001", title: "Baju Kaos Merah Tertukar", category: "Pakaian Hilang", status: "Selesai", date: "Hari ini" },
-    { id: "KLM-002", title: "Keterlambatan Paket Express", category: "Durasi Layanan", status: "Diproses", date: "Kemarin" }
-  ]);
+  const [complaints, setComplaints] = useState([]);
+  const [complaintsLoading, setComplaintsLoading] = useState(true);
   const [newComplaint, setNewComplaint] = useState({ title: "", category: "Pakaian Hilang" });
   const [complaintSuccess, setComplaintSuccess] = useState(false);
 
@@ -129,6 +128,19 @@ export default function LandingPage() {
     }
   };
 
+  const fetchComplaints = async () => {
+    setComplaintsLoading(true);
+    try {
+      const data = await loadComplaints();
+      setComplaints(data || []);
+    } catch (err) {
+      console.error("Gagal memuat komplain landing page:", err);
+      setComplaints([]);
+    } finally {
+      setComplaintsLoading(false);
+    }
+  };
+
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (!inputMessage.trim()) return;
@@ -146,15 +158,27 @@ export default function LandingPage() {
     }, 1000);
   };
 
-  const handleComplaintSubmit = (e) => {
+  const handleComplaintSubmit = async (e) => {
     e.preventDefault();
     if (!newComplaint.title.trim()) return;
-    const code = `KLM-00${complaints.length + 1}`;
-    setComplaints((prev) => [{ id: code, title: newComplaint.title, category: newComplaint.category, status: "Diterima", date: "Baru saja" }, ...prev]);
-    setNewComplaint({ title: "", category: "Pakaian Hilang" });
-    setComplaintSuccess(true);
-    toast.success("Pengaduan berhasil didaftarkan!");
-    setTimeout(() => setComplaintSuccess(false), 3000);
+
+    try {
+      await submitComplaint({
+        name: user?.user_metadata?.name || user?.email?.split("@")[0] || "Pelanggan",
+        phone: user?.user_metadata?.phone || "",
+        type: newComplaint.category,
+        orderId: "-",
+        description: newComplaint.title.trim(),
+      });
+      await fetchComplaints();
+      setNewComplaint({ title: "", category: "Pakaian Hilang" });
+      setComplaintSuccess(true);
+      toast.success("Pengaduan berhasil dikirim dan tersimpan.");
+      setTimeout(() => setComplaintSuccess(false), 3000);
+    } catch (err) {
+      toast.error("Gagal mengirim pengaduan. Silakan coba lagi.");
+      console.error("Gagal mengirim komplain landing page:", err);
+    }
   };
 
   const handleFeedbackSubmit = (e) => {
